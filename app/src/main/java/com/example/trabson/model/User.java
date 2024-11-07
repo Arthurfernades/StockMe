@@ -4,23 +4,21 @@ import java.util.Date;
 
 public class User {
 
-    private int id;
+    private int id, idWallet;
 
     private String name, email, password;
 
     private Date birthDate;
 
-    private Wallet wallet;
-
     public User() { }
 
-    public User(int id, String name, String email, String password, Date birthDate, Wallet wallet) {
+    public User(int id, String name, String email, String password, Date birthDate, int idWallet) {
         this.id = id;
+        this.idWallet = idWallet;
         this.name = name;
         this.email = email;
         this.password = password;
         this.birthDate = birthDate;
-        this.wallet = wallet;
     }
 
     public int getId() {
@@ -29,6 +27,14 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdWallet() {
+        return idWallet;
+    }
+
+    public void setIdWallet(int idWallet) {
+        this.idWallet = idWallet;
     }
 
     public String getName() {
@@ -61,13 +67,5 @@ public class User {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public Wallet getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(Wallet wallet) {
-        this.wallet = wallet;
     }
 }
