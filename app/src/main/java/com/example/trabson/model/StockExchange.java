@@ -7,7 +7,9 @@ import java.util.Date;
 
 public class StockExchange {
 
-    private int id, quantity, idWallet;
+    private int id, quantity;
+
+    private Integer idWallet;
 
     private String name, code;
 
@@ -22,7 +24,7 @@ public class StockExchange {
     public StockExchange() {
     }
 
-    public StockExchange(int id, int quantity, int idWallet, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, Date transactionDate, double transactionValue) {
+    public StockExchange(int id, int quantity, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, Date transactionDate, double transactionValue, Integer idWallet) {
         this.id = id;
         this.quantity = quantity;
         this.idWallet = idWallet;
@@ -50,11 +52,11 @@ public class StockExchange {
         this.quantity = quantity;
     }
 
-    public int getIdWallet() {
+    public Integer getIdWallet() {
         return idWallet;
     }
 
-    public void setIdWallet(int idWallet) {
+    public void setIdWallet(Integer idWallet) {
         this.idWallet = idWallet;
     }
 

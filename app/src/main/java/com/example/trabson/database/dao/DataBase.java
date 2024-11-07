@@ -43,7 +43,7 @@ public class DataBase extends SQLiteOpenHelper {
             "name text not null," +
             "code text not null," +
             "stockType text not null," +
-            "transactionType integer," +
+            "transactionType text," +
             "transactionDate text," +
             "transactionValue double not null," +
             "idWallet integer" +
