@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class StockExchange {
 
-    private int id, quantity;
+    private int id, quantity, idWallet;
 
     private String name, code;
 
@@ -22,9 +22,10 @@ public class StockExchange {
     public StockExchange() {
     }
 
-    public StockExchange(int id, int quantity, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, Date transactionDate, double transactionValue) {
+    public StockExchange(int id, int quantity, int idWallet, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, Date transactionDate, double transactionValue) {
         this.id = id;
         this.quantity = quantity;
+        this.idWallet = idWallet;
         this.name = name;
         this.code = code;
         this.stockType = stockType;
@@ -47,6 +48,14 @@ public class StockExchange {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getIdWallet() {
+        return idWallet;
+    }
+
+    public void setIdWallet(int idWallet) {
+        this.idWallet = idWallet;
     }
 
     public String getName() {
