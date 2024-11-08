@@ -105,7 +105,7 @@ public class UserDao extends GenericsDao<User, Integer> {
 
             Cursor c = con.rawQuery(sql, null);
 
-            ArrayList<User> users = null;
+            ArrayList<User> users = new ArrayList<>();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
 
@@ -142,4 +142,21 @@ public class UserDao extends GenericsDao<User, Integer> {
             Close();
         }
     }
+
+    public Boolean confirmByEmailAndPassword(String email, String password) {
+        try {
+            Open();
+
+            String sql = "select * from user where email = " + email + " and password = " + password;
+
+            Cursor c = con.rawQuery(sql, null);
+
+            return c.moveToFirst();
+
+        } finally {
+            Close();
+        }
+
+    }
+
 }

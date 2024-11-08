@@ -90,7 +90,7 @@ public class WalletDao extends GenericsDao<Wallet, Integer>{
 
             Cursor c = con.rawQuery(sql, null);
 
-            ArrayList<Wallet> wallets = null;
+            ArrayList<Wallet> wallets = new ArrayList<>();
 
             c.moveToFirst();
             while(!c.isAfterLast()) {
@@ -120,6 +120,28 @@ public class WalletDao extends GenericsDao<Wallet, Integer>{
             c.moveToFirst();
 
             return c.getLong(0);
+
+        } finally {
+            Close();
+        }
+    }
+
+    public Wallet findWalletByUserId(int userId) {
+        try {
+            Open();
+
+            String sql = "select * from wallet where id = " + userId;
+
+            Cursor c = con.rawQuery(sql, null);
+
+            Wallet wallet = null;
+
+            if(c.moveToFirst()) {
+
+                wallet = new Wallet(c.getInt(0), c.getDouble(1), c.getDouble(2), null);
+            }
+
+            return wallet;
 
         } finally {
             Close();

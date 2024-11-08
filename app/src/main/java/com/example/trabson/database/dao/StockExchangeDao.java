@@ -159,4 +159,35 @@ public class StockExchangeDao extends GenericsDao<StockExchange, Integer>{
             Close();
         }
     }
+
+    public ArrayList<StockExchange> findAllStocksByWalletId(int walletId) {
+        try {
+            Open();
+
+            String sql = "select * from stock_exchange where idWallet = " + walletId;
+
+            Cursor c = con.rawQuery(sql, null);
+
+            ArrayList<StockExchange> stocksExchange = new ArrayList<>();
+
+            c.moveToFirst();
+            if(c.isAfterLast()) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+
+                StockExchange stockExchange = new StockExchange(c.getInt(0), c.getInt(1), c.getString(2),
+                        c.getString(3), ETypeStock.valueOf(c.getString(4)), ETypeTransaction.valueOf(c.getString(5)),
+                        Date.valueOf(c.getString(6)), c.getDouble(7), c.getInt(8));
+
+                stocksExchange.add(stockExchange);
+
+                c.moveToFirst();
+            }
+
+            return stocksExchange;
+
+        } finally {
+            Close();;
+        }
+    }
 }
