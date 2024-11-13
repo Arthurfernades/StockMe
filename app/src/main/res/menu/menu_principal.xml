@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mnAcoes"
+        android:icon="@drawable/stock_icon"
+        android:title="@string/acoes"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnCarteira"
+        android:icon="@drawable/wallet_icon"
+        android:title="@string/carteira"
+        app:showAsAction="ifRoom" />
+</menu>
