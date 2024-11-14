@@ -28,6 +28,7 @@ public class DataBase extends SQLiteOpenHelper {
             "email text not null," +
             "password text not null," +
             "birthDate text not null," +
+            "gender text not null," +
             "idWallet integer" +
             ")";
 

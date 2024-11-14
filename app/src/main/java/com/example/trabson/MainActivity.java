@@ -1,5 +1,7 @@
 package com.example.trabson;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -7,6 +9,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,9 +35,31 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+//        SharedPreferences prefs = getSharedPreferences("lembrarLogin", MODE_PRIVATE);
+
+        callLoginPage();
+
         binding();
         setSupportActionBar(tbMain);
     }
+
+    private void callLoginPage() {
+
+        Intent itn = new Intent(getApplicationContext(), LoginActivity.class);
+        viewLoginPage.launch(itn);
+    }
+
+    ActivityResultLauncher<Intent> viewLoginPage = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == 0) {
+                        finish();
+                    }
+                }
+            }
+    );
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

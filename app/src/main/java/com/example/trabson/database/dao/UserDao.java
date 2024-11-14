@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.example.trabson.model.Enum.EGender;
 import com.example.trabson.model.User;
 
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class UserDao extends GenericsDao<User, Integer> {
 
@@ -28,6 +30,7 @@ public class UserDao extends GenericsDao<User, Integer> {
             cv.put("email", obj.getEmail());
             cv.put("password", obj.getPassword());
             cv.put("birthDate", sdf.format(obj.getBirthDate()));
+            cv.put("gender", obj.getGender().toString());
             cv.put("idWallet", obj.getIdWallet());
 
             con.insert("user", "id", cv);
@@ -49,6 +52,7 @@ public class UserDao extends GenericsDao<User, Integer> {
             cv.put("email", obj.getEmail());
             cv.put("password", obj.getPassword());
             cv.put("birthDate", sdf.format(obj.getBirthDate()));
+            cv.put("gender", obj.getGender().toString());
 
             con.update("user", cv, "id = " + obj.getId(), null);
 
@@ -82,10 +86,18 @@ public class UserDao extends GenericsDao<User, Integer> {
 
             if(c.moveToFirst()) {
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+                Date date = null;
+
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+                try {
+                    date= formato.parse(c.getString(4));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
 
                 user = new User(c.getInt(0), c.getString(1), c.getString(2),
-                c.getString(3), Date.valueOf(c.getString(4)), c.getInt(5));
+                c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
             }
 
             return user;
@@ -107,12 +119,20 @@ public class UserDao extends GenericsDao<User, Integer> {
 
             ArrayList<User> users = new ArrayList<>();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+            Date date = null;
+
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                date= formato.parse(c.getString(4));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
 
             c.moveToFirst();
             while(!c.isAfterLast()) {
                 User user = new User(c.getInt(0), c.getString(1), c.getString(2),
-                        c.getString(3), Date.valueOf(c.getString(4)), c.getInt(5));
+                        c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
 
                 users.add(user);
 
@@ -143,11 +163,46 @@ public class UserDao extends GenericsDao<User, Integer> {
         }
     }
 
+    public User findByEmail(String email) {
+        try {
+            Open();
+
+            String sql = "select * from user where email =  '" + email + "'";
+
+            Cursor c = con.rawQuery(sql, null);
+
+            User user = null;
+
+            Date date = null;
+
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+            try {
+                date= formato.parse(c.getString(4));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(c.moveToFirst()) {
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+
+                user = new User(c.getInt(0), c.getString(1), c.getString(2),
+                        c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
+            }
+
+            return user;
+
+        } finally {
+            Close();
+        }
+    }
+
     public Boolean confirmByEmailAndPassword(String email, String password) {
         try {
             Open();
 
-            String sql = "select * from user where email = " + email + " and password = " + password;
+            String sql = "select * from user where email =  '" + email + "' and password = " + password;
 
             Cursor c = con.rawQuery(sql, null);
 

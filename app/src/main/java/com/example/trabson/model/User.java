@@ -1,24 +1,31 @@
 package com.example.trabson.model;
 
+import com.example.trabson.model.Enum.EGender;
+
 import java.util.Date;
 
 public class User {
 
-    private int id, idWallet;
+    private int id;
+
+    private Integer idWallet;
 
     private String name, email, password;
 
     private Date birthDate;
 
+    private EGender gender;
+
     public User() { }
 
-    public User(int id, String name, String email, String password, Date birthDate, int idWallet) {
+    public User(int id, String name, String email, String password, Date birthDate, EGender gender, Integer idWallet) {
         this.id = id;
         this.idWallet = idWallet;
         this.name = name;
         this.email = email;
         this.password = password;
         this.birthDate = birthDate;
+        this.gender = gender;
     }
 
     public int getId() {
@@ -29,11 +36,11 @@ public class User {
         this.id = id;
     }
 
-    public int getIdWallet() {
+    public Integer getIdWallet() {
         return idWallet;
     }
 
-    public void setIdWallet(int idWallet) {
+    public void setIdWallet(Integer idWallet) {
         this.idWallet = idWallet;
     }
 
@@ -67,5 +74,13 @@ public class User {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public EGender getGender() {
+        return gender;
+    }
+
+    public void setGender(EGender gender) {
+        this.gender = gender;
     }
 }

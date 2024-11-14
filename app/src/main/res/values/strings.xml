@@ -1,5 +1,16 @@
 <resources>
-    <string name="app_name"></string>
+    <string name="app_name"> </string>
     <string name="acoes">Ações</string>
     <string name="carteira">Carteira</string>
+    <string name="email">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="lembrar">Lembrar</string>
+    <string name="entrar">Entrar</string>
+    <string name="novoPorAqui">Novo por aqui?</string>
+    <string name="repetirSenha">Repita a senha</string>
+    <string name="nome">Nome</string>
+    <string name="dataNascimento">Data de Nascimento</string>
+    <string name="registrar">Registrar</string>
+    <string name="masculino">Masculino</string>
+    <string name="feminino">Feminino</string>
 </resources>
