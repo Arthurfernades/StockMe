@@ -3,13 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/mnAcoes"
+        android:id="@+id/mnStocks"
         android:icon="@drawable/stock_icon"
         android:title="@string/acoes"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/mnCarteira"
+        android:id="@+id/mnWallet"
         android:icon="@drawable/wallet_icon"
         android:title="@string/carteira"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnExit"
+        android:title="@string/sair" />
 </menu>

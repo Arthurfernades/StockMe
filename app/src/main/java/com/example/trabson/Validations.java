@@ -4,7 +4,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class Validations {
 
-    public static boolean validaCampoVazio(TextInputLayout campo) {
+    public static boolean validateEmptyField(TextInputLayout campo) {
         String valor = campo.getEditText().getText().toString();
 
         if(valor.isEmpty()) {
@@ -16,7 +16,7 @@ public class Validations {
         return true;
     }
 
-    public static boolean validaTamanho(TextInputLayout campo) {
+    public static boolean validateSize(TextInputLayout campo) {
         String valor = campo.getEditText().getText().toString();
 
         if(valor.length() > campo.getCounterMaxLength() ) {

@@ -13,4 +13,5 @@
     <string name="registrar">Registrar</string>
     <string name="masculino">Masculino</string>
     <string name="feminino">Feminino</string>
+    <string name="sair">Sair</string>
 </resources>
