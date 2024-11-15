@@ -1,5 +1,7 @@
 package com.example.trabson;
 
+import static com.example.trabson.Validations.validaCampoVazio;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     Intent itn = new Intent();
                     itn.putExtra("email", cpRegisterEmail.getEditText().getText().toString());
-                    setResult(200);
+                    setResult(200, itn);
                     finish();
                 }
             }
@@ -85,15 +87,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean camposCorretos = false;
 
-        if(cpRegisterName.getEditText().getText() != null && cpRegisterEmail.getEditText().getText() != null &&
-                cpRegisterPassword.getEditText().getText() != null && cpRepeatedPassword.getEditText().getText() != null &&
-                cpRegisterBirthDate.getEditText().getText() != null)
-        {
-            camposCorretos = true;
-        }
+        camposCorretos = validaCampoVazio(cpRegisterName) && validaCampoVazio(cpRegisterEmail) &&
+                validaCampoVazio(cpRegisterPassword) && validaCampoVazio(cpRepeatedPassword) &&
+                validaCampoVazio(cpRegisterBirthDate);
 
         if(uDao.findByEmail(cpRegisterEmail.getEditText().getText().toString()) != null) {
-            Toast.makeText(getApplicationContext(), "E-mail já em uso!", Toast.LENGTH_LONG).show();
+            cpRegisterEmail.setError("E-mail já em uso");
+            cpRegisterEmail.requestFocus();
             cpRegisterEmail.getEditText().setText("");
             camposCorretos = false;
         }

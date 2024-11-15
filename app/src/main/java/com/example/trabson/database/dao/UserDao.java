@@ -23,7 +23,7 @@ public class UserDao extends GenericsDao<User, Integer> {
         try {
             Open();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             ContentValues cv = new ContentValues();
             cv.put("name", obj.getName());
@@ -45,7 +45,7 @@ public class UserDao extends GenericsDao<User, Integer> {
         try {
             Open();
 
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             ContentValues cv = new ContentValues();
             cv.put("name", obj.getName());
@@ -177,15 +177,16 @@ public class UserDao extends GenericsDao<User, Integer> {
 
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
-            try {
-                date= formato.parse(c.getString(4));
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
 
             if(c.moveToFirst()) {
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MMM/yyyy");
+                try {
+                    date= formato.parse(c.getString(4));
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
                 user = new User(c.getInt(0), c.getString(1), c.getString(2),
                         c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
@@ -211,7 +212,6 @@ public class UserDao extends GenericsDao<User, Integer> {
         } finally {
             Close();
         }
-
     }
 
 }
