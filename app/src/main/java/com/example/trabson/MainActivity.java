@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -20,18 +20,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.trabson.database.dao.UserDao;
-import com.example.trabson.model.User;
-
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar tbMain;
-
-    private TextView tvUserName;
-
-    private UserDao uDao;
-
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,27 +35,18 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        uDao = new UserDao(getApplicationContext());
+//        SharedPreferences prefs = getSharedPreferences("lembrarLogin", MODE_PRIVATE);
 
         callLoginPage();
 
         binding();
-
-        tbMain.setTitle("Olá, " + user.getName() + "!");
-
         setSupportActionBar(tbMain);
     }
 
     private void callLoginPage() {
 
-        SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
-
-        if(!prefs.getBoolean("loged", false)) {
-            Intent itn = new Intent(getApplicationContext(), LoginActivity.class);
-            viewLoginPage.launch(itn);
-        }
-        String email = prefs.getString("email", null);
-        user = uDao.findByEmail(email);
+        Intent itn = new Intent(getApplicationContext(), LoginActivity.class);
+        viewLoginPage.launch(itn);
     }
 
     ActivityResultLauncher<Intent> viewLoginPage = registerForActivityResult(
@@ -92,17 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        if (id == R.id.mnStocks) {
+        if (id == R.id.mnAcoes) {
             Toast.makeText(getApplicationContext(), "Clicou em ações!", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.mnWallet) {
+        } else if (id == R.id.mnCarteira) {
             Toast.makeText(getApplicationContext(), "Clicou em carteira!", Toast.LENGTH_LONG).show();
-        } else if (id == R.id.mnExit) {
-            SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
-            SharedPreferences.Editor edt = prefs.edit();
-            edt.remove("email");
-            edt.remove("loged");
-            edt.commit();
-            callLoginPage();
         }
 
         return super.onOptionsItemSelected(item);

@@ -214,19 +214,4 @@ public class UserDao extends GenericsDao<User, Integer> {
         }
     }
 
-    public Boolean confirmEmailExist(String email) {
-        try {
-            Open();
-
-            String sql = "select email from user where email =  '" + email + "'";
-
-            Cursor c = con.rawQuery(sql, null);
-
-            return c.moveToFirst();
-
-        } finally {
-            Close();
-        }
-    }
-
 }

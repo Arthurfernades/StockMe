@@ -1,7 +1,6 @@
 package com.example.trabson;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.trabson.database.dao.UserDao;
 import com.google.android.material.textfield.TextInputLayout;
-import static com.example.trabson.Validations.validateEmptyField;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         uDao = new UserDao(this);
 
-        btnLogin.setOnClickListener(clickLogin());
+        btnLogin.setOnClickListener(clickRemember());
 
         tvNewUser.setOnClickListener(clickNewUser());
 
@@ -80,36 +78,15 @@ public class LoginActivity extends AppCompatActivity {
             }
     );
 
-    private View.OnClickListener clickLogin() {
+    private View.OnClickListener clickRemember() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(validateEmptyField(cpEmail) && validateEmptyField(cpPassword)) {
-
-                    if(uDao.confirmEmailExist(cpEmail.getEditText().getText().toString())) {
-
-                        if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
-
-                            SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
-                            SharedPreferences.Editor edt = prefs.edit();
-                            edt.putString("email", cpEmail.getEditText().getText().toString());
-                            if(cbRemember.isChecked()) {
-                                edt.putBoolean("loged", cbRemember.isChecked());
-                            }
-                            edt.commit();
-
-                            setResult(200);
-                            finish();
-
-                        } else {
-                            cpPassword.setError("Senha incorreta");
-                            cpPassword.getEditText().setText("");
-                        }
-
-                    } else {
-                        cpEmail.setError("E-mail inexistente");
-                        cpPassword.getEditText().setText("");
-                    }
+                if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
+                    setResult(200);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "E-mail ou senha incorreto.", Toast.LENGTH_LONG).show();
                 }
             }
         };

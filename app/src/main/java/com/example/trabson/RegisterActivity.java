@@ -1,10 +1,9 @@
 package com.example.trabson;
 
-import static com.example.trabson.Validations.validateEmptyField;
+import static com.example.trabson.Validations.validaCampoVazio;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -88,9 +87,9 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean camposCorretos = false;
 
-        camposCorretos = validateEmptyField(cpRegisterName) && validateEmptyField(cpRegisterEmail) &&
-                validateEmptyField(cpRegisterPassword) && validateEmptyField(cpRepeatedPassword) &&
-                validateEmptyField(cpRegisterBirthDate);
+        camposCorretos = validaCampoVazio(cpRegisterName) && validaCampoVazio(cpRegisterEmail) &&
+                validaCampoVazio(cpRegisterPassword) && validaCampoVazio(cpRepeatedPassword) &&
+                validaCampoVazio(cpRegisterBirthDate);
 
         if(uDao.findByEmail(cpRegisterEmail.getEditText().getText().toString()) != null) {
             cpRegisterEmail.setError("E-mail já em uso");
