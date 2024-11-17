@@ -1,6 +1,7 @@
 package com.example.trabson;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -84,6 +85,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(uDao.emailExists(cpEmail.getEditText().getText().toString())) {
                     if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
+
+                        SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+                        SharedPreferences.Editor edt = prefs.edit();
+                        edt.putString("email", cpEmail.getEditText().getText().toString());
+                        edt.putBoolean("loged", cbRemember.isChecked());
+                        edt.apply();
+
                         setResult(200);
                         finish();
                     } else {

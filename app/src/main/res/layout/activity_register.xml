@@ -30,7 +30,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 app:srcCompat="@drawable/register_icon" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -39,7 +39,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:hint="@string/nome"
                 app:boxBackgroundMode="outline"
                 app:errorEnabled="true">
@@ -56,7 +56,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:hint="@string/email"
                 app:errorEnabled="true">
 
@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:hint="@string/senha"
                 app:errorEnabled="true"
                 app:passwordToggleEnabled="true">
@@ -89,7 +89,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:hint="@string/repetirSenha"
                 app:errorEnabled="true"
                 app:passwordToggleEnabled="true">
@@ -106,7 +106,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:hint="@string/dataNascimento"
                 app:errorEnabled="true">
 
@@ -123,7 +123,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:checkedButton="@id/rbRegisterMale"
                 android:orientation="horizontal">
 
@@ -148,7 +148,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="0dp"
                 android:text="@string/registrar" />
         </LinearLayout>
     </ScrollView>

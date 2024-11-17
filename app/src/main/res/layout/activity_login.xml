@@ -78,8 +78,8 @@
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="0dp"
                 android:text="@string/entrar" />
 
@@ -87,12 +87,10 @@
                 android:id="@+id/tvNewUser"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
                 android:text="@string/novoPorAqui"
                 android:textAlignment="center"
-                android:textColor="@android:color/system_control_activated_dark" />
+                android:textColor="#3F51B5" />
+
         </LinearLayout>
     </ScrollView>
 

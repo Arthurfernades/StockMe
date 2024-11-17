@@ -63,7 +63,11 @@ public class NavigationActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        callLoginPage();
+        SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+
+        if(!prefs.getBoolean("loged", false)) {
+            callLoginPage();
+        }
 
     }
 
@@ -100,6 +104,16 @@ public class NavigationActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         int id = item.getItemId();
+
+        if(id == R.id.mnExit) {
+            SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+            SharedPreferences.Editor edt = prefs.edit();
+            edt.remove("email");
+            edt.remove("loged");
+            edt.apply();
+
+            callLoginPage();
+        }
 
         return super.onOptionsItemSelected(item);
     }
