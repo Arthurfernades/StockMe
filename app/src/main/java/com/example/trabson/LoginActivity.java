@@ -82,11 +82,15 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
-                    setResult(200);
-                    finish();
+                if(uDao.emailExists(cpEmail.getEditText().getText().toString())) {
+                    if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
+                        setResult(200);
+                        finish();
+                    } else {
+                        cpPassword.setError("Senha inválida");
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "E-mail ou senha incorreto.", Toast.LENGTH_LONG).show();
+                    cpEmail.setError("E-mail inexistente");
                 }
             }
         };
@@ -99,6 +103,5 @@ public class LoginActivity extends AppCompatActivity {
         cpEmail = findViewById(R.id.cpEmail);
         cpPassword = findViewById(R.id.cpPassword);
         tvNewUser = findViewById(R.id.tvNewUser);
-
     }
 }

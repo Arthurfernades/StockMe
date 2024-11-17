@@ -6,4 +6,13 @@
     </style>
 
     <style name="Theme.Trabson" parent="Base.Theme.Trabson" />
+
+    <style name="Theme.Trabson.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Trabson.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Trabson.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
