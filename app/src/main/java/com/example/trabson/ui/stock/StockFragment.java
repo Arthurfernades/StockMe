@@ -1,4 +1,4 @@
-package com.example.trabson.ui.slideshow;
+package com.example.trabson.ui.stock;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trabson.databinding.FragmentSlideshowBinding;
 
-public class SlideshowFragment extends Fragment {
+public class StockFragment extends Fragment {
 
     private FragmentSlideshowBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        StockViewModel stockViewModel =
+                new ViewModelProvider(this).get(StockViewModel.class);
 
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        stockViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

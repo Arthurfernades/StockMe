@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         uDao = new UserDao(this);
 
-        btnLogin.setOnClickListener(clickRemember());
+        btnLogin.setOnClickListener(clickLogin());
 
         tvNewUser.setOnClickListener(clickNewUser());
 
@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             }
     );
 
-    private View.OnClickListener clickRemember() {
+    private View.OnClickListener clickLogin() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,4 +1,4 @@
-package com.example.trabson.ui.gallery;
+package com.example.trabson.ui.wallet;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,20 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trabson.databinding.FragmentGalleryBinding;
 
-public class GalleryFragment extends Fragment {
+public class WalletFragment extends Fragment {
 
     private FragmentGalleryBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        WalletModel walletModel =
+                new ViewModelProvider(this).get(WalletModel.class);
 
         binding = FragmentGalleryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        walletModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
