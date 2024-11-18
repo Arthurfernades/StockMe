@@ -40,11 +40,7 @@ import com.example.trabson.databinding.ActivityNavigationBinding;
 
 public class NavigationActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-
     private ActivityNavigationBinding binding;
-
-    private TextView tvUserName, tvUserEmail;
 
     private UserDao uDao;
 
@@ -71,6 +67,7 @@ public class NavigationActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         Toolbar toolbar = binding.appBarNavigation.toolbar;
+        View headerView = navigationView.getHeaderView(0);
 
         navigationView.setNavigationItemSelectedListener(openSelectedNavItem());
 
@@ -79,14 +76,6 @@ public class NavigationActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-
-        /*mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_stocks, R.id.nav_wallet)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);*/
 
         SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
 
@@ -97,9 +86,6 @@ public class NavigationActivity extends AppCompatActivity {
         uDao = new UserDao(getApplicationContext());
 
         user =  uDao.findByEmail(prefs.getString("email", null));
-
-//        tvUserEmail.setText(user.getEmail());
-//        tvUserName.setText(user.getName());
 
     }
 
@@ -148,8 +134,6 @@ public class NavigationActivity extends AppCompatActivity {
     }
 
     private void bindingKeys() {
-        tvUserName = findViewById(R.id.tvUserName);
-        tvUserEmail = findViewById(R.id.tvUserEmail);
     }
 
     private void callLoginPage() {
@@ -193,11 +177,4 @@ public class NavigationActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    /*@Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_navigation);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }*/
 }

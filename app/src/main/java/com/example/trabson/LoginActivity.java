@@ -20,7 +20,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.trabson.database.dao.UserDao;
+import com.example.trabson.model.dto.UserDTO;
+import com.example.trabson.service.user.UserService;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -83,6 +87,24 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                UserDTO userDTO = new UserService().Logar(cpEmail.getEditText().getText().toString(),
+                        cpPassword.getEditText().getText().toString());
+
+                if(userDTO != null) {
+
+                    SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+                    SharedPreferences.Editor edt = prefs.edit();
+                    edt.putString("email", cpEmail.getEditText().getText().toString());
+                    edt.putBoolean("loged", cbRemember.isChecked());
+                    edt.apply();
+
+                    setResult(200);
+                    finish();
+
+                }
+
+
                 if(uDao.emailExists(cpEmail.getEditText().getText().toString())) {
                     if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
 

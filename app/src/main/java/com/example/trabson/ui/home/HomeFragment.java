@@ -8,10 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.trabson.R;
-import com.example.trabson.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
 
@@ -19,8 +17,6 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
 
         return inflater.inflate(R.layout.fragment_home, container, false);
     }

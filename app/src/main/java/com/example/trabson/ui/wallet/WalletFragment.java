@@ -8,30 +8,26 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.trabson.databinding.FragmentGalleryBinding;
+import com.example.trabson.R;
 
 public class WalletFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private TextView userName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        WalletModel walletModel =
-                new ViewModelProvider(this).get(WalletModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
-        final TextView textView = binding.textGallery;
-        walletModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }

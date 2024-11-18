@@ -8,30 +8,26 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.trabson.databinding.FragmentSlideshowBinding;
+import com.example.trabson.R;
 
 public class StockFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private TextView userName;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        StockViewModel stockViewModel =
-                new ViewModelProvider(this).get(StockViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
 
-        final TextView textView = binding.textSlideshow;
-        stockViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }
