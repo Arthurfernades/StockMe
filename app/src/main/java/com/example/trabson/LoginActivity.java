@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                UserDTO userDTO = new UserService().Logar(cpEmail.getEditText().getText().toString(),
+                /*UserDTO userDTO = new UserService().Logar(cpEmail.getEditText().getText().toString(),
                         cpPassword.getEditText().getText().toString());
 
                 if(userDTO != null) {
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
                     setResult(200);
                     finish();
 
-                }
+                }*/
 
 
                 if(uDao.emailExists(cpEmail.getEditText().getText().toString())) {
@@ -110,8 +110,8 @@ public class LoginActivity extends AppCompatActivity {
 
                         SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
                         SharedPreferences.Editor edt = prefs.edit();
-                        edt.putString("email", cpEmail.getEditText().getText().toString());
                         edt.putBoolean("loged", cbRemember.isChecked());
+                        edt.putString("email", cpEmail.getEditText().getText().toString());
                         edt.apply();
 
                         setResult(200);

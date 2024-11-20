@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.trabson.database.dao.UserDao;
 import com.example.trabson.model.User;
+import com.example.trabson.model.dto.UserDTO;
 import com.example.trabson.ui.home.HomeFragment;
 import com.example.trabson.ui.stock.StockFragment;
 import com.example.trabson.ui.wallet.WalletFragment;
@@ -44,7 +45,17 @@ public class NavigationActivity extends AppCompatActivity {
 
     private UserDao uDao;
 
+    private UserDTO userDTO;
+
+    private String email;
+
     private User user;
+
+    private TextView tvUserName, tvUserEmail;
+
+    private View headerView;
+
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +78,7 @@ public class NavigationActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         Toolbar toolbar = binding.appBarNavigation.toolbar;
-        View headerView = navigationView.getHeaderView(0);
+        headerView = navigationView.getHeaderView(0);
 
         navigationView.setNavigationItemSelectedListener(openSelectedNavItem());
 
@@ -77,15 +88,34 @@ public class NavigationActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+        prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
 
         if(!prefs.getBoolean("loged", false)) {
             callLoginPage();
         }
 
+        setEmailAndNameOnDrawer();
+
+        changeFragment(new HomeFragment());
+
+    }
+
+    private void setEmailAndNameOnDrawer() {
+
+        prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+
+        email = prefs.getString("email", null);
+
         uDao = new UserDao(getApplicationContext());
 
-        user =  uDao.findByEmail(prefs.getString("email", null));
+        user =  uDao.findByEmail(email);
+
+        tvUserName = headerView.findViewById(R.id.tvUserName);
+        tvUserEmail = headerView.findViewById(R.id.tvUserEmail);
+
+
+        tvUserName.setText(user.getName());
+        tvUserEmail.setText(user.getEmail());
 
     }
 
@@ -147,7 +177,11 @@ public class NavigationActivity extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() != 200) {
+                    if(result.getResultCode() == 200) {
+
+                        setEmailAndNameOnDrawer();
+
+                    } else {
                         finish();
                     }
                 }

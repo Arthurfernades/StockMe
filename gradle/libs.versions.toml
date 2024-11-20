@@ -12,11 +12,13 @@ lifecycleViewmodelKtx = "2.8.7"
 navigationFragment = "2.8.4"
 navigationUi = "2.8.4"
 gson = "2.11.0"
+retrofit = "2.0.0-beta2"
+retrofitVersion = "2.11.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version = "1.2.1" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.6.1" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
@@ -26,6 +28,8 @@ lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-view
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+retrofit = { group = "com.squareup.retrofit", name = "retrofit", version.ref = "retrofit" }
+retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofitVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

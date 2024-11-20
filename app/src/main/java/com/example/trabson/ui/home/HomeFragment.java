@@ -25,9 +25,9 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        userName = getActivity().findViewById(R.id.text_home);
+//        userName = getActivity().findViewById(R.id.text_home);
 
-        userName.setText(getArguments().getString("nome"));
+//        userName.setText(getArguments().getString("nome"));
 
     }
 
