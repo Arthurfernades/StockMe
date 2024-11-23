@@ -1,33 +1,34 @@
 package com.example.trabson.model.dto;
 
+import com.example.trabson.model.Enum.EGender;
+
+import java.util.Date;
+
 public class UserDTO {
 
-    private String access_token, refresh_token, email, password;
+    private String name, email, password;
+
+    private Date birthDate;
+
+    private EGender gender;
 
     public UserDTO() {
     }
 
-    public UserDTO(String access_token, String refresh_token, String email, String password) {
-        this.access_token = access_token;
-        this.refresh_token = refresh_token;
+    public UserDTO(String name, String email, String password, Date birthDate, EGender gender) {
+        this.name = name;
         this.email = email;
         this.password = password;
+        this.birthDate = birthDate;
+        this.gender = gender;
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getName() {
+        return name;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
-    }
-
-    public String getRefresh_token() {
-        return refresh_token;
-    }
-
-    public void setRefresh_token(String refresh_token) {
-        this.refresh_token = refresh_token;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -44,5 +45,21 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public EGender getGender() {
+        return gender;
+    }
+
+    public void setGender(EGender gender) {
+        this.gender = gender;
     }
 }

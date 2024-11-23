@@ -3,6 +3,7 @@ package com.example.trabson;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,12 +20,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.trabson.config.RetrofitConfig;
 import com.example.trabson.database.dao.UserDao;
-import com.example.trabson.model.dto.UserDTO;
-import com.example.trabson.service.user.UserService;
+import com.example.trabson.model.dto.UserLoginDTO;
+import com.example.trabson.service.IUserService;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.util.concurrent.ExecutionException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,11 +37,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button btnLogin;
 
-    private UserDao uDao;
+    private IUserService userService;
 
     private TextInputLayout cpEmail, cpPassword;
 
     private TextView tvNewUser;
+
+    private boolean loginVerified;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +58,9 @@ public class LoginActivity extends AppCompatActivity {
 
         binding();
 
-        uDao = new UserDao(this);
+        Retrofit retrofit = new RetrofitConfig().getUserRetrofit();
+
+        userService = retrofit.create(IUserService.class);
 
         btnLogin.setOnClickListener(clickLogin());
 
@@ -87,26 +96,30 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                    loginVerified = false;
+                    UserLoginDTO userLoginDTO = new UserLoginDTO(cpEmail.getEditText().getText().toString(),
+                            cpPassword.getEditText().getText().toString());
 
-                /*UserDTO userDTO = new UserService().Logar(cpEmail.getEditText().getText().toString(),
-                        cpPassword.getEditText().getText().toString());
+                    Call<String> resp = userService.login(userLoginDTO);
 
-                if(userDTO != null) {
+                    resp.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if(response.message().equals("User exists")) {
+                                loginVerified = true;
+                            } else {
+                                Log.e("API", "Erro: " + response.errorBody());
+                                Toast.makeText(getApplicationContext(), "E-mail ou senha incorreto", Toast.LENGTH_LONG).show();
+                            }
+                        }
 
-                    SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
-                    SharedPreferences.Editor edt = prefs.edit();
-                    edt.putString("email", cpEmail.getEditText().getText().toString());
-                    edt.putBoolean("loged", cbRemember.isChecked());
-                    edt.apply();
+                        @Override
+                        public void onFailure(Call<String> call, Throwable throwable) {
+                            Log.e("API", "Falha: " + throwable.getMessage());
+                        }
+                    });
 
-                    setResult(200);
-                    finish();
-
-                }*/
-
-
-                if(uDao.emailExists(cpEmail.getEditText().getText().toString())) {
-                    if(uDao.confirmByEmailAndPassword(cpEmail.getEditText().getText().toString(), cpPassword.getEditText().getText().toString())) {
+                    if(loginVerified) {
 
                         SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
                         SharedPreferences.Editor edt = prefs.edit();
@@ -116,12 +129,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         setResult(200);
                         finish();
-                    } else {
-                        cpPassword.setError("Senha inválida");
                     }
-                } else {
-                    cpEmail.setError("E-mail inexistente");
-                }
             }
         };
     }

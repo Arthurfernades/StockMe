@@ -1,19 +1,16 @@
 package com.example.trabson;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.trabson.database.dao.UserDao;
 import com.example.trabson.model.User;
-import com.example.trabson.model.dto.UserDTO;
+import com.example.trabson.model.dto.UserLoginDTO;
 import com.example.trabson.ui.home.HomeFragment;
 import com.example.trabson.ui.stock.StockFragment;
 import com.example.trabson.ui.wallet.WalletFragment;
@@ -30,10 +27,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -45,7 +38,7 @@ public class NavigationActivity extends AppCompatActivity {
 
     private UserDao uDao;
 
-    private UserDTO userDTO;
+    private UserLoginDTO userLoginDTO;
 
     private String email;
 
@@ -94,7 +87,9 @@ public class NavigationActivity extends AppCompatActivity {
             callLoginPage();
         }
 
-        setEmailAndNameOnDrawer();
+
+        if(prefs.getString("email", null) != null)
+            setEmailAndNameOnDrawer();
 
         changeFragment(new HomeFragment());
 
