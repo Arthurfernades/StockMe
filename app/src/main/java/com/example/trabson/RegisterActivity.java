@@ -1,6 +1,6 @@
 package com.example.trabson;
 
-import static com.example.trabson.Validations.validaCampoVazio;
+import static com.example.trabson.helper.Validations.validaCampoVazio;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,22 +16,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.trabson.config.RetrofitConfig;
-
 import com.example.trabson.model.Enum.EGender;
-import com.example.trabson.model.User;
 import com.example.trabson.model.dto.UserDTO;
-import com.example.trabson.service.IUserService;
+import com.example.trabson.service.user.UserServiceImp;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import java.util.Locale;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -42,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button btnRegister;
 
-    private IUserService userService;
+    private String formattedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
             return insets;
         });
 
-        Retrofit retrofit = new RetrofitConfig().getUserRetrofit();
-
-        userService = retrofit.create(IUserService.class);
-
         binding();
 
         btnRegister.setOnClickListener(clickRegister());
@@ -70,42 +59,33 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(fieldsCheck()) {
 
-                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
-                    Date date = null;
-
-                    try {
-                        date= formato.parse(cpRegisterBirthDate.getEditText().getText().toString());
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-
                     UserDTO userDTO = new UserDTO(cpRegisterName.getEditText().getText().toString(), cpRegisterEmail.getEditText().getText().toString(),
-                            cpRegisterPassword.getEditText().getText().toString(), date,
+                            cpRegisterPassword.getEditText().getText().toString(), formattedDate,
                             rbMale.isChecked()? EGender.MALE : EGender.FEMALE);
 
-                    Call<User> user =  userService.saveUser(userDTO);
+                    UserServiceImp userServiceImp = new UserServiceImp();
 
-                    user.enqueue(new Callback<User>() {
+                    userServiceImp.createUser(userDTO, new UserServiceImp.AuthServiceCallback() {
                         @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-                            if(response.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), response.message().toString(), Toast.LENGTH_LONG).show();
-                            } else {
-                                Log.e("API", "Erro: " + response.errorBody());
+                        public void onSuccess(String result) {
+                            if(result.equals("Successful")) {
+                                Intent itn = new Intent();
+                                itn.putExtra("email", cpRegisterEmail.getEditText().getText().toString());
+                                setResult(200, itn);
+                                finish();
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<User> call, Throwable throwable) {
-                            Log.e("API", "Falha: " + throwable.getMessage());
+                        public void onError(String error) {
+                            if(error.equals("Email already exists")) {
+                                cpRegisterEmail.setError("E-mail já cadastrado");
+                                cpRegisterEmail.getEditText().setText("");
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Erro inesoerado", Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
-
-                    Intent itn = new Intent();
-                    itn.putExtra("email", cpRegisterEmail.getEditText().getText().toString());
-                    setResult(200, itn);
-                    finish();
                 }
             }
         };
@@ -113,24 +93,34 @@ public class RegisterActivity extends AppCompatActivity {
 
     private boolean fieldsCheck() {
 
-        boolean camposCorretos = false;
+        boolean camposCorretos = true;
+        formattedDate = null;
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+        try {
+            Date date = inputFormat.parse(cpRegisterBirthDate.getEditText().getText().toString());
+            formattedDate = outputFormat.format(date);
+        } catch (ParseException e) {
+            Log.e("DateParsing", "Erro ao converter a data: " + e.getMessage());
+        }
+
 
         camposCorretos = validaCampoVazio(cpRegisterName) && validaCampoVazio(cpRegisterEmail) &&
                 validaCampoVazio(cpRegisterPassword) && validaCampoVazio(cpRepeatedPassword) &&
                 validaCampoVazio(cpRegisterBirthDate);
 
-        /*if(uDao.findByEmail(cpRegisterEmail.getEditText().getText().toString()) != null) {
-            cpRegisterEmail.setError("E-mail já em uso");
-            cpRegisterEmail.requestFocus();
-            cpRegisterEmail.getEditText().setText("");
-            camposCorretos = false;
-        }*/
-
         if(!cpRegisterPassword.getEditText().getText().toString().equals(cpRepeatedPassword.getEditText().getText().toString())) {
-            Toast.makeText(getApplicationContext(), "Senhas não estão iguais!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "As senhas não coincidem!", Toast.LENGTH_LONG).show();
             cpRegisterPassword.getEditText().setText("");
             cpRepeatedPassword.getEditText().setText("");
             camposCorretos = false;
+        }
+
+        if(formattedDate == null) {
+            camposCorretos = false;
+            cpRegisterBirthDate.setError("Formato incorreto. Use dd/MM/yyyy");
         }
 
         return camposCorretos;

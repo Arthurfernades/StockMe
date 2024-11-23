@@ -6,16 +6,14 @@ import java.util.Date;
 
 public class UserDTO {
 
-    private String name, email, password;
-
-    private Date birthDate;
+    private String name, email, password, birthDate;
 
     private EGender gender;
 
     public UserDTO() {
     }
 
-    public UserDTO(String name, String email, String password, Date birthDate, EGender gender) {
+    public UserDTO(String name, String email, String password, String birthDate, EGender gender) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -47,11 +45,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

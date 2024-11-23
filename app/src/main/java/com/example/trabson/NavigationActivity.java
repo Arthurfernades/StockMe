@@ -7,10 +7,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.trabson.database.dao.UserDao;
 import com.example.trabson.model.User;
-import com.example.trabson.model.dto.UserLoginDTO;
+import com.example.trabson.model.dto.LoginDTO;
+import com.example.trabson.service.user.UserServiceImp;
 import com.example.trabson.ui.home.HomeFragment;
 import com.example.trabson.ui.stock.StockFragment;
 import com.example.trabson.ui.wallet.WalletFragment;
@@ -36,13 +38,9 @@ public class NavigationActivity extends AppCompatActivity {
 
     private ActivityNavigationBinding binding;
 
-    private UserDao uDao;
-
-    private UserLoginDTO userLoginDTO;
-
     private String email;
 
-    private User user;
+    private User currentUser;
 
     private TextView tvUserName, tvUserEmail;
 
@@ -101,16 +99,30 @@ public class NavigationActivity extends AppCompatActivity {
 
         email = prefs.getString("email", null);
 
-        uDao = new UserDao(getApplicationContext());
+        currentUser = null;
 
-        user =  uDao.findByEmail(email);
+        UserServiceImp userServiceImp = new UserServiceImp();
+
+        userServiceImp.findByEmail(email, new UserServiceImp.UserCallback() {
+            @Override
+            public void onSuccess(User user) {
+                currentUser = user;
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getApplicationContext(), "Problema em se conectar a API", Toast.LENGTH_LONG).show();
+            }
+        });
 
         tvUserName = headerView.findViewById(R.id.tvUserName);
         tvUserEmail = headerView.findViewById(R.id.tvUserEmail);
 
 
-        tvUserName.setText(user.getName());
-        tvUserEmail.setText(user.getEmail());
+        if(currentUser != null) {
+            tvUserName.setText(currentUser.getName());
+            tvUserEmail.setText(currentUser.getEmail());
+        }
 
     }
 
@@ -124,7 +136,6 @@ public class NavigationActivity extends AppCompatActivity {
                     HomeFragment home = new HomeFragment();
 
                     Bundle args = new Bundle();
-                    args.putString("nome", user.getName());
 
                     home.setArguments(args);
 

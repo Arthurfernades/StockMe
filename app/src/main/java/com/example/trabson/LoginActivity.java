@@ -3,7 +3,6 @@ package com.example.trabson;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,14 +20,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.trabson.config.RetrofitConfig;
-import com.example.trabson.database.dao.UserDao;
-import com.example.trabson.model.dto.UserLoginDTO;
-import com.example.trabson.service.IUserService;
+import com.example.trabson.model.dto.LoginDTO;
+import com.example.trabson.service.user.UserServiceImp;
 import com.google.android.material.textfield.TextInputLayout;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.Map;
+
 import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -37,13 +34,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button btnLogin;
 
-    private IUserService userService;
-
     private TextInputLayout cpEmail, cpPassword;
 
     private TextView tvNewUser;
 
-    private boolean loginVerified;
+    private Map<String, Boolean> loginVerified;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         binding();
 
         Retrofit retrofit = new RetrofitConfig().getUserRetrofit();
-
-        userService = retrofit.create(IUserService.class);
 
         btnLogin.setOnClickListener(clickLogin());
 
@@ -96,40 +89,46 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    loginVerified = false;
-                    UserLoginDTO userLoginDTO = new UserLoginDTO(cpEmail.getEditText().getText().toString(),
-                            cpPassword.getEditText().getText().toString());
 
-                    Call<String> resp = userService.login(userLoginDTO);
+                cpEmail.setError(null);
+                cpPassword.setError(null);
 
-                    resp.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            if(response.message().equals("User exists")) {
-                                loginVerified = true;
-                            } else {
-                                Log.e("API", "Erro: " + response.errorBody());
-                                Toast.makeText(getApplicationContext(), "E-mail ou senha incorreto", Toast.LENGTH_LONG).show();
-                            }
+                UserServiceImp userServiceImp = new UserServiceImp();
+
+                LoginDTO loginDTO = new LoginDTO(cpEmail.getEditText().getText().toString(),
+                        cpPassword.getEditText().getText().toString());
+
+                userServiceImp.authorizeLogin(loginDTO, new UserServiceImp.AuthServiceCallback() {
+                    @Override
+                    public void onSuccess(String result) {
+                        if(result.equals("Authorized")) {
+                            SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+                            SharedPreferences.Editor edt = prefs.edit();
+                            edt.putBoolean("loged", cbRemember.isChecked());
+                            edt.putString("email", cpEmail.getEditText().getText().toString());
+                            edt.apply();
+
+                            setResult(200);
+                            finish();
                         }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable throwable) {
-                            Log.e("API", "Falha: " + throwable.getMessage());
-                        }
-                    });
-
-                    if(loginVerified) {
-
-                        SharedPreferences prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
-                        SharedPreferences.Editor edt = prefs.edit();
-                        edt.putBoolean("loged", cbRemember.isChecked());
-                        edt.putString("email", cpEmail.getEditText().getText().toString());
-                        edt.apply();
-
-                        setResult(200);
-                        finish();
                     }
+
+                    @Override
+                    public void onError(String error) {
+                        if(error.equals("Email not registered")) {
+                            cpEmail.setError("E-mail não cadastrado");
+                            cpPassword.getEditText().setText("");
+
+                        } else if(error.equals("Invalid credentials")) {
+                            cpPassword.setError("Senha incorreta");
+                            cpPassword.getEditText().setText("");
+                            cpEmail.setError(null);
+
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Erro na API: " + error, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
         };
     }

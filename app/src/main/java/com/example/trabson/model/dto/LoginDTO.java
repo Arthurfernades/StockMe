@@ -1,13 +1,13 @@
 package com.example.trabson.model.dto;
 
-public class UserLoginDTO {
+public class LoginDTO {
 
     private String email, password;
 
-    public UserLoginDTO() {
+    public LoginDTO() {
     }
 
-    public UserLoginDTO(String email, String password) {
+    public LoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
     }

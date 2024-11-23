@@ -1,4 +1,4 @@
-package com.example.trabson;
+package com.example.trabson.helper;
 
 import com.google.android.material.textfield.TextInputLayout;
 
