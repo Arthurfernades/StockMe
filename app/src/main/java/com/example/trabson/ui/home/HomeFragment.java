@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,65 +18,53 @@ import com.example.trabson.adapter.news.NewsAdapter;
 import com.example.trabson.model.Article;
 import com.example.trabson.service.news.NewsServiceImp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-
     private NewsAdapter newsAdapter;
-
     private NewsServiceImp newsService;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        SwipeRefreshLayout swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                fetchNews();
-            }
-        });
-
         recyclerView = view.findViewById(R.id.rvListNews);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        newsAdapter = new NewsAdapter(new ArrayList<>(), getContext());
+        recyclerView.setAdapter(newsAdapter);
 
         newsService = new NewsServiceImp();
 
-        return view;
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
+        swipeRefreshLayout.setOnRefreshListener(() -> fetchNews());
 
         fetchNews();
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+        return view;
     }
 
     private void fetchNews() {
+        swipeRefreshLayout.setRefreshing(true);
 
         newsService.getAllNews(new NewsServiceImp.NewsCallback() {
             @Override
             public void onSuccess(List<Article> articles) {
-                newsAdapter = new NewsAdapter(articles);
-                recyclerView.setAdapter(newsAdapter);
+                newsAdapter.updateData(articles);
+
+                swipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onError(String error) {
                 Log.e("NewsError", "Error fetching news: " + error);
+
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }

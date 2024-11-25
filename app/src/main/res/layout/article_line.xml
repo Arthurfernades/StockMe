@@ -7,7 +7,6 @@
     android:background="@color/white"
     android:padding="8dp">
 
-    <!-- Título da Notícia -->
     <TextView
         android:id="@+id/tvTitleNews"
         android:layout_width="0dp"
@@ -23,7 +22,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Imagem da Notícia -->
     <ImageView
         android:id="@+id/ivImageNews"
         android:layout_width="0dp"
@@ -35,7 +33,6 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitleNews"
         tools:src="@tools:sample/backgrounds/scenic" />
 
-    <!-- Descrição da Notícia -->
     <TextView
         android:id="@+id/tvDescriptionNews"
         android:layout_width="0dp"
@@ -49,20 +46,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivImageNews" />
 
-    <!-- Link para a Notícia -->
-    <TextView
-        android:id="@+id/tvFontNews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:autoLink="web"
-        android:textColor="@android:color/holo_blue_dark"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDescriptionNews"
-        tools:text="https://example.com" />
-
-    <!-- Data da Notícia -->
     <TextView
         android:id="@+id/tvDateNews"
         android:layout_width="wrap_content"
@@ -75,6 +58,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvFontNews" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDescriptionNews" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,10 @@
 package com.example.trabson.adapter.news;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,36 +16,52 @@ import com.example.trabson.R;
 import com.example.trabson.model.Article;
 import com.squareup.picasso.Picasso;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class NewsHolder extends RecyclerView.ViewHolder {
 
     private TextView titleNews, descriptionNews, fontNews, dateNews;
 
     private ImageView imageNews;
 
-    public NewsHolder(@NonNull View itemView) {
-        super(itemView);
+    private Context ctx;
 
+    public NewsHolder(@NonNull View itemView, Context ctx) {
+        super(itemView);
+        this.ctx = ctx;
         bind();
     }
 
     public void fill(Article article) {
-        if(!article.getTitle().equals("[Removed]")) {
             titleNews.setText(article.getTitle());
             descriptionNews.setText(article.getDescription());
-            fontNews.setText(article.getUrl());
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ISO_DATE_TIME;
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            ZonedDateTime parsedDate = ZonedDateTime.parse(article.getPublishedAt(), inputFormatter);
+            String formattedDate = parsedDate.format(outputFormatter);
+            dateNews.setText(formattedDate);
+        } else {
             dateNews.setText(article.getPublishedAt());
+        }
+
             Picasso.get()
                     .load(article.getUrlToImage())
-                    .placeholder(R.drawable.logo_login)
-                    .error(R.drawable.side_nav_bar)
+                    .placeholder(R.drawable.loading_icon)
+                    .error(R.drawable.erro_icon)
                     .into(imageNews);
-        }
+
+        imageNews.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(article.getUrl()));
+            startActivity(ctx, browserIntent, null);
+        });
     }
 
     public void bind() {
         titleNews = itemView.findViewById(R.id.tvTitleNews);
         descriptionNews = itemView.findViewById(R.id.tvDescriptionNews);
-        fontNews = itemView.findViewById(R.id.tvFontNews);
         dateNews = itemView.findViewById(R.id.tvDateNews);
         imageNews = itemView.findViewById(R.id.ivImageNews);
     }

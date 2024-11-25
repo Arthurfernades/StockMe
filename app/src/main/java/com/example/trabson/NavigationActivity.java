@@ -66,18 +66,11 @@ public class NavigationActivity extends AppCompatActivity {
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarNavigation.toolbar);
-        binding.appBarNavigation.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
-            }
-        });
+        setSupportActionBar(binding.appBarNavigation.tbMain);
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        Toolbar toolbar = binding.appBarNavigation.toolbar;
+        Toolbar toolbar = binding.appBarNavigation.tbMain;
         headerView = navigationView.getHeaderView(0);
 
         navigationView.setNavigationItemSelectedListener(openSelectedNavItem());
@@ -86,7 +79,9 @@ public class NavigationActivity extends AppCompatActivity {
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(toggle);
-        toggle.syncState();changeFragment(new HomeFragment());
+        toggle.syncState();
+        changeFragment(new HomeFragment());
+        getSupportActionBar().setTitle("Notícias");
 
     }
 
@@ -130,6 +125,8 @@ public class NavigationActivity extends AppCompatActivity {
 
                 if(item.getItemId() == R.id.nav_home) {
 
+                    getSupportActionBar().setTitle("Notícias");
+
                     HomeFragment home = new HomeFragment();
 
                     Bundle args = new Bundle();
@@ -140,11 +137,15 @@ public class NavigationActivity extends AppCompatActivity {
 
                 } else if(item.getItemId() == R.id.nav_stocks) {
 
+                    getSupportActionBar().setTitle("Ações");
+
                     StockFragment stock = new StockFragment();
 
                     changeFragment(stock);
 
                 } else if(item.getItemId() == R.id.nav_wallet) {
+
+                    getSupportActionBar().setTitle("Carteira");
 
                     WalletFragment wallet = new WalletFragment();
 

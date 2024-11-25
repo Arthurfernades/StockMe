@@ -1,5 +1,6 @@
 package com.example.trabson.adapter.news;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +17,18 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
 
     private List<Article> articles;
 
-    public NewsAdapter(List<Article> articles) {
+    private Context ctx;
+
+    public NewsAdapter(List<Article> articles, Context ctx) {
         this.articles = articles;
+        this.ctx = ctx;
     }
 
     @NonNull
     @Override
     public NewsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_line, parent, false);
-        return new NewsHolder(view);
+        return new NewsHolder(view, ctx);
     }
 
     @Override
@@ -34,6 +38,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsHolder> {
 
     @Override
     public int getItemCount() {
-        return  articles.size();
+        return articles.size();
+    }
+
+    public void updateData(List<Article> newArticles) {
+        this.articles.clear();
+        this.articles.addAll(newArticles);
+        notifyDataSetChanged();
     }
 }

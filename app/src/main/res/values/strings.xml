@@ -26,4 +26,5 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="sair">Sair</string>
     <string name="semNoticia">Nenhuma notícia disponível</string>
+    <string name="noticias">Notícias</string>
 </resources>
