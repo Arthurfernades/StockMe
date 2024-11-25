@@ -1,6 +1,7 @@
 package com.example.trabson.model;
 
 import com.example.trabson.model.Enum.EGender;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -8,6 +9,7 @@ public class User {
 
     private int id;
 
+    @SerializedName("wallet")
     private Integer idWallet;
 
     private String name, email, password;

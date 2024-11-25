@@ -13,15 +13,13 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class UserServiceImp {
 
-    private IUserService userService;
+    private final IUserService userService;
 
     public UserServiceImp() {
-        Retrofit retrofit = new RetrofitConfig().getUserRetrofit();
-        userService = retrofit.create(IUserService.class);
+        userService = new RetrofitConfig().getUserRetrofit().create(IUserService.class);
     }
 
     public void createUser(UserDTO userDTO, final AuthServiceCallback callback) {
@@ -63,9 +61,9 @@ public class UserServiceImp {
         callLogin.enqueue(new Callback<ResponseDTO>() {
             @Override
             public void onResponse(Call<ResponseDTO> call, Response<ResponseDTO> response) {
-                Log.d("API Response", "Code: " + response.code());
-                Log.d("API Response", "Body: " + response.body());
-                Log.d("Raw Response", response.raw().toString());
+                Log.d("API Response (authorizeLogin)", "Code: " + response.code());
+                Log.d("API Response (authorizeLogin)", "Body: " + response.body());
+                Log.d("Raw Response (authorizeLogin)", response.raw().toString());
 
                 if(response.code() == 200) {
                     callback.onSuccess("Authorized");
@@ -76,7 +74,6 @@ public class UserServiceImp {
                 } else {
                     callback.onError("Invalid");
                 }
-
             }
 
             @Override
@@ -93,10 +90,10 @@ public class UserServiceImp {
         callUser.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful()) {
-                    callback.onSuccess(response.body()); // Call the success callback with the user
+                if (response.isSuccessful()) {
+                    callback.onSuccess(response.body());
                 } else {
-                    callback.onError("Error: " + response.code()); // Call the error callback
+                    callback.onError("Erro: " + response.code() + " - " + response.message());
                 }
             }
 

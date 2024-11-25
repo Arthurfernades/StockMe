@@ -32,8 +32,9 @@ public interface IUserService {
     @DELETE("user/{id}")
     Call<String> deleteUser(@Path("id") int userId);
 
-    @GET("user/{email}")
+    @GET("/email/{email}")
     Call<User> getUserByEmail(@Path("email") String email);
+
 
     @POST("auth/login")
     Call<ResponseDTO> login(@Body LoginDTO LoginDTO);

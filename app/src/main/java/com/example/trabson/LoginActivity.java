@@ -38,8 +38,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView tvNewUser;
 
-    private Map<String, Boolean> loginVerified;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         binding();
-
-        Retrofit retrofit = new RetrofitConfig().getUserRetrofit();
 
         btnLogin.setOnClickListener(clickLogin());
 

@@ -34,6 +34,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trabson.databinding.ActivityNavigationBinding;
 
+import java.util.Objects;
+
 public class NavigationActivity extends AppCompatActivity {
 
     private ActivityNavigationBinding binding;
@@ -52,7 +54,14 @@ public class NavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        bindingKeys();
+        prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
+
+        if(!prefs.getBoolean("loged", false)) {
+            SharedPreferences.Editor edt = prefs.edit();
+            edt.remove("email");
+            edt.apply();
+            callLoginPage();
+        }
 
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -77,19 +86,7 @@ public class NavigationActivity extends AppCompatActivity {
                 toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        prefs = getSharedPreferences("StockMe", MODE_PRIVATE);
-
-        if(!prefs.getBoolean("loged", false)) {
-            callLoginPage();
-        }
-
-
-        if(prefs.getString("email", null) != null)
-            setEmailAndNameOnDrawer();
-
-        changeFragment(new HomeFragment());
+        toggle.syncState();changeFragment(new HomeFragment());
 
     }
 
@@ -111,7 +108,7 @@ public class NavigationActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Problema em se conectar a API", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Erro de resposta da API: " + error, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -169,9 +166,6 @@ public class NavigationActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void bindingKeys() {
-    }
-
     private void callLoginPage() {
 
         Intent itn = new Intent(getApplicationContext(), LoginActivity.class);
@@ -187,12 +181,20 @@ public class NavigationActivity extends AppCompatActivity {
 
                         setEmailAndNameOnDrawer();
 
+                        showNews();
+
                     } else {
                         finish();
                     }
                 }
             }
     );
+
+    private void showNews() {
+
+        changeFragment(new HomeFragment());
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
