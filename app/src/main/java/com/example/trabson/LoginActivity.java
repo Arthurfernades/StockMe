@@ -19,14 +19,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.trabson.config.RetrofitConfig;
 import com.example.trabson.model.dto.LoginDTO;
 import com.example.trabson.service.user.UserServiceImp;
 import com.google.android.material.textfield.TextInputLayout;
-
-import java.util.Map;
-
-import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 

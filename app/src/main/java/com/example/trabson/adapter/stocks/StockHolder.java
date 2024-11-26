@@ -1,10 +1,8 @@
 package com.example.trabson.adapter.stocks;
 
-import static androidx.core.content.ContextCompat.startActivity;
+import static com.example.trabson.helper.SvgLoader.loadSvg;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,18 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trabson.R;
-import com.example.trabson.model.Article;
 import com.example.trabson.model.Stock;
-import com.squareup.picasso.Picasso;
-
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
-import coil.ComponentRegistry;
-import coil.ImageLoader;
-import coil.decode.ImageSource;
-import coil.decode.SvgDecoder;
-import coil.request.ImageRequest;
 
 public class StockHolder extends RecyclerView.ViewHolder {
 
@@ -45,7 +32,7 @@ public class StockHolder extends RecyclerView.ViewHolder {
         stockCode.setText(stock.getStock());
         nameNSector.setText(stock.getName() + " - " + stock.getSector());
         stockClose.setText("R$" + stock.getClose());
-
+        loadSvg(ctx, stock.getLogo(), stockSvg);
     }
 
     public void bind() {

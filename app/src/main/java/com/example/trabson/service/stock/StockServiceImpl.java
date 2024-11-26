@@ -16,14 +16,15 @@ public class StockServiceImpl {
 
     String API_KEY = "smud9UeC49ZLexnn6NiFay";
 
-    private final IStockService iStockService;
+    private IStockService stockService;
 
     public StockServiceImpl() {
-        iStockService = new RetrofitConfig().getStockRetrofit().create(IStockService.class);
+        stockService = new RetrofitConfig().getStockRetrofit().create(IStockService.class);
     }
 
     public void getAllStocks(String type, final StockCallback stockCallback) {
-        Call<StockResponseDTO> call = iStockService.getStockList(type, API_KEY);
+
+        Call<StockResponseDTO> call = stockService.getStockList(type, API_KEY);
 
         call.enqueue(new Callback<StockResponseDTO>() {
             @Override
@@ -35,8 +36,8 @@ public class StockServiceImpl {
 
                     StockResponseDTO stockResponseDTO = response.body();
 
-                    if (stockResponseDTO.getStockList() != null) {
-                        stockCallback.onSuccess(stockResponseDTO.getStockList());
+                    if (stockResponseDTO.getStocks() != null) {
+                        stockCallback.onSuccess(stockResponseDTO.getStocks());
                         Log.d("BRAPI", "Lista criada com sucesso!");
                     } else {
                         stockCallback.onError("Lista de ações vazia ou não encontrada.");

@@ -4,12 +4,14 @@ public class Stock {
 
     private String stock, name, logo, sector, type;
 
-    private double  close, change , volume, market_cap;
+    private double  close, change, market_cap;
+
+    private long volume;
 
     public Stock() {
     }
 
-    public Stock(String stock, String name, String logo, String sector, String type, double close, double change, double volume, double market_cap) {
+    public Stock(String stock, String name, String logo, String sector, String type, double close, double change, long volume, double market_cap) {
         this.stock = stock;
         this.name = name;
         this.logo = logo;
@@ -77,11 +79,11 @@ public class Stock {
         this.change = change;
     }
 
-    public double getVolume() {
+    public long getVolume() {
         return volume;
     }
 
-    public void setVolume(double volume) {
+    public void setVolume(long volume) {
         this.volume = volume;
     }
 
@@ -92,5 +94,4 @@ public class Stock {
     public void setMarket_cap(double market_cap) {
         this.market_cap = market_cap;
     }
-
 }
