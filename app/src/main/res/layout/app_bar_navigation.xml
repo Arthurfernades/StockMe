@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     tools:context=".NavigationActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Trabson.AppBarOverlay">
+        android:background="@color/blue"
+        android:theme="@style/Theme.Trabson.AppBarOverlay"
+        app:liftOnScrollColor="@color/blue">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tbMain"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/system_accent1_400"
+            android:background="@color/blue"
             app:popupTheme="@style/Theme.Trabson.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

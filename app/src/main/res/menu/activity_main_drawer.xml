@@ -2,19 +2,27 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/news_icon"
-            android:title="@string/noticias" />
-        <item
-            android:id="@+id/nav_stocks"
-            android:icon="@drawable/stock_icon"
-            android:title="@string/acoes" />
-        <item
-            android:id="@+id/nav_wallet"
-            android:icon="@drawable/wallet_icon"
-            android:title="@string/carteira" />
-    </group>
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/news_icon"
+        android:title="@string/noticias" />
+    <item
+        android:id="@+id/nav_wallet"
+        android:icon="@drawable/wallet_icon"
+        android:title="@string/carteira" />
+    <item android:title="@string/mercado" >
+        <menu >
+            <item
+                android:id="@+id/nav_stocks"
+                android:icon="@drawable/stock_icon"
+                android:title="@string/acoes" />
+            <item
+                android:id="@+id/nav_fund"
+                android:icon="@drawable/fund_icon"
+                android:title="@string/fundos_imobiliarios" />
+            <item
+                android:id="@+id/nav_bdr"
+                android:title="@string/bdr" />
+        </menu>
+    </item>
 </menu>

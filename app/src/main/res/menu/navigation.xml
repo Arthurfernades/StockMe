@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="@string/sair"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/mnSwitch"
+        android:title="@string/switchTheme"
+        app:actionLayout="@layout/switch_item"
+        app:showAsAction="ifRoom" />
 </menu>

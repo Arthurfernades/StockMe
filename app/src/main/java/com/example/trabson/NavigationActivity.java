@@ -6,17 +6,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.trabson.database.dao.UserDao;
 import com.example.trabson.model.User;
-import com.example.trabson.model.dto.LoginDTO;
 import com.example.trabson.service.user.UserServiceImp;
 import com.example.trabson.ui.home.HomeFragment;
 import com.example.trabson.ui.stock.StockFragment;
 import com.example.trabson.ui.wallet.WalletFragment;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResult;
@@ -61,6 +60,8 @@ public class NavigationActivity extends AppCompatActivity {
             edt.remove("email");
             edt.apply();
             callLoginPage();
+        } else {
+            setEmailAndNameOnDrawer();
         }
 
         binding = ActivityNavigationBinding.inflate(getLayoutInflater());
@@ -73,6 +74,8 @@ public class NavigationActivity extends AppCompatActivity {
         Toolbar toolbar = binding.appBarNavigation.tbMain;
         headerView = navigationView.getHeaderView(0);
 
+        tvUserName = headerView.findViewById(R.id.tvUserName);
+
         navigationView.setNavigationItemSelectedListener(openSelectedNavItem());
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
@@ -80,6 +83,7 @@ public class NavigationActivity extends AppCompatActivity {
 
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
         changeFragment(new HomeFragment());
         getSupportActionBar().setTitle("Notícias");
 
@@ -99,6 +103,7 @@ public class NavigationActivity extends AppCompatActivity {
             @Override
             public void onSuccess(User user) {
                 currentUser = user;
+                tvUserName.setText("Bem-vindo, " + currentUser.getName() + "!");
             }
 
             @Override
@@ -106,16 +111,6 @@ public class NavigationActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Erro de resposta da API: " + error, Toast.LENGTH_LONG).show();
             }
         });
-
-        tvUserName = headerView.findViewById(R.id.tvUserName);
-        tvUserEmail = headerView.findViewById(R.id.tvUserEmail);
-
-
-        if(currentUser != null) {
-            tvUserName.setText(currentUser.getName());
-            tvUserEmail.setText(currentUser.getEmail());
-        }
-
     }
 
     private NavigationView.OnNavigationItemSelectedListener openSelectedNavItem() {
@@ -192,14 +187,26 @@ public class NavigationActivity extends AppCompatActivity {
     );
 
     private void showNews() {
-
         changeFragment(new HomeFragment());
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation, menu);
+
+        /*Switch mySwitch = findViewById(R.id.mnSwitch);
+        Switch sourceSwitch = findViewById(R.id.switchTheme);
+
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked) {
+                    sourceSwitch.setThumbResource(R.drawable.sun_icon);
+                } else {
+                    sourceSwitch.setThumbResource(R.drawable.moon_icon);
+                }
+            }
+        });*/
         return true;
     }
 

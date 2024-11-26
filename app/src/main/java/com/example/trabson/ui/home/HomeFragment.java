@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -36,7 +37,14 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvListNews);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+
+        recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                recyclerView.getContext(), layoutManager.getOrientation());
+
+        recyclerView.addItemDecoration(dividerItemDecoration);
         newsAdapter = new NewsAdapter(new ArrayList<>(), getContext());
         recyclerView.setAdapter(newsAdapter);
 

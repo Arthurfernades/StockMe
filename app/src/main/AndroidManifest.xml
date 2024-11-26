@@ -20,7 +20,6 @@
         <activity
             android:name=".NavigationActivity"
             android:exported="true"
-            android:label="@string/title_activity_navigation"
             android:theme="@style/Theme.Trabson.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

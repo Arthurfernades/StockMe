@@ -24,17 +24,16 @@ public interface IUserService {
     public Call<List<LoginDTO>> getAllUsers();
 
     @GET("user/{id}")
-    Call<User>  getUser(@Path("id") int userId);
+    Call<User> getUser(@Path("id") int userId);
 
-    @PUT("/user/{id}")
+    @PUT("user/{id}")
     Call<User> updateUser(@Path("id") int id, @Body User user);
 
     @DELETE("user/{id}")
     Call<String> deleteUser(@Path("id") int userId);
 
-    @GET("/email/{email}")
+    @GET("user/email/{email}")
     Call<User> getUserByEmail(@Path("email") String email);
-
 
     @POST("auth/login")
     Call<ResponseDTO> login(@Body LoginDTO LoginDTO);
