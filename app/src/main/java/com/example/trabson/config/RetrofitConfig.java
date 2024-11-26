@@ -18,6 +18,11 @@ public class RetrofitConfig {
                 .baseUrl("https://newsapi.org/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        stockRetrofit = new Retrofit.Builder()
+                .baseUrl("https://brapi.dev/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public Retrofit getStockRetrofit() {

@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 
 public class NewsHolder extends RecyclerView.ViewHolder {
 
-    private TextView titleNews, descriptionNews, fontNews, dateNews;
+    private TextView titleNews, descriptionNews, dateNews;
 
     private ImageView imageNews;
 

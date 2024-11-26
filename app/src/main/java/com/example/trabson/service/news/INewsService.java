@@ -18,7 +18,9 @@ import retrofit2.http.Path;
 
 public interface INewsService {
 
-    @GET("v2/everything?q=business&language=pt&apiKey=387cfa7c9bac4e09bc55903a276569a3")
+    String API_NEWS_KEY = "387cfa7c9bac4e09bc55903a276569a3";
+
+    @GET("v2/everything?q=business&language=pt&apiKey=" + API_NEWS_KEY)
     Call<NewsDTO> getAllNews();
 
 }

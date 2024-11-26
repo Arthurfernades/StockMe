@@ -6,7 +6,6 @@ import com.example.trabson.config.RetrofitConfig;
 import com.example.trabson.model.Article;
 import com.example.trabson.model.dto.NewsDTO;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,9 +16,6 @@ import retrofit2.Response;
 public class NewsServiceImp {
 
     private INewsService newsService;
-
-    private List<Article> newsList;
-
 
     public NewsServiceImp() {
         newsService = new RetrofitConfig().getNewsRetrofit().create(INewsService.class);
@@ -63,5 +59,4 @@ public class NewsServiceImp {
         void onSuccess(List<Article> articles);
         void onError(String error);
     }
-
 }
