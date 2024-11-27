@@ -56,7 +56,7 @@ public class StockFragment extends Fragment {
                 recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        stockAdapter = new StockAdapter(new ArrayList<>(), viewStockInfo);
+        stockAdapter = new StockAdapter(new ArrayList<>(), viewStockInfo, getArguments().getString("userEmail"));
         recyclerView.setAdapter(stockAdapter);
 
         stockService = new StockServiceImpl();

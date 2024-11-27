@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     UserDTO userDTO = new UserDTO(cpRegisterName.getEditText().getText().toString(), cpRegisterEmail.getEditText().getText().toString(),
                             cpRegisterPassword.getEditText().getText().toString(), formattedDate,
-                            rbMale.isChecked()? EGender.MALE : EGender.FEMALE);
+                            rbMale.isChecked()? EGender.MALE : EGender.FEMALE, 0, 0);
 
                     UserServiceImp userServiceImp = new UserServiceImp();
 

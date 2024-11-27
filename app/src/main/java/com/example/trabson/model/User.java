@@ -1,7 +1,6 @@
 package com.example.trabson.model;
 
 import com.example.trabson.model.Enum.EGender;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
@@ -9,25 +8,26 @@ public class User {
 
     private int id;
 
-    @SerializedName("wallet")
-    private Integer idWallet;
-
     private String name, email, password;
 
     private Date birthDate;
 
     private EGender gender;
 
+    private double profit;
+
+    private double budget;
+
     public User() { }
 
-    public User(int id, String name, String email, String password, Date birthDate, EGender gender, Integer idWallet) {
-        this.id = id;
-        this.idWallet = idWallet;
+    public User(int id, String name, String email, String password, Date birthDate, EGender gender, double profit, double budget) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.profit = profit;
+        this.budget = budget;
     }
 
     public int getId() {
@@ -36,14 +36,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getIdWallet() {
-        return idWallet;
-    }
-
-    public void setIdWallet(Integer idWallet) {
-        this.idWallet = idWallet;
     }
 
     public String getName() {
@@ -84,5 +76,21 @@ public class User {
 
     public void setGender(EGender gender) {
         this.gender = gender;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
     }
 }

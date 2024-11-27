@@ -2,23 +2,27 @@ package com.example.trabson.model.dto;
 
 import com.example.trabson.model.Enum.EGender;
 
-import java.util.Date;
-
 public class UserDTO {
 
     private String name, email, password, birthDate;
 
     private EGender gender;
 
+    private double profit;
+
+    private double budget;
+
     public UserDTO() {
     }
 
-    public UserDTO(String name, String email, String password, String birthDate, EGender gender) {
+    public UserDTO(String name, String email, String password, String birthDate, EGender gender, double profit, double budget) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.birthDate = birthDate;
         this.gender = gender;
+        this.profit = profit;
+        this.budget = budget;
     }
 
     public String getName() {
@@ -59,5 +63,21 @@ public class UserDTO {
 
     public void setGender(EGender gender) {
         this.gender = gender;
+    }
+
+    public double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit = profit;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
     }
 }

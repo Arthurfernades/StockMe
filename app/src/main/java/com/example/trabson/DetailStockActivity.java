@@ -5,9 +5,11 @@ import com.example.trabson.helper.SvgLoader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,14 +17,26 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.trabson.model.Enum.ETypeStock;
+import com.example.trabson.model.Enum.ETypeTransaction;
 import com.example.trabson.model.Result;
+import com.example.trabson.model.User;
+import com.example.trabson.model.UserStock;
 import com.example.trabson.service.stock.StockServiceImpl;
+import com.example.trabson.service.user.UserServiceImp;
+import com.example.trabson.service.userStock.UserStockServiceImpl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailStockActivity extends AppCompatActivity {
 
     private StockServiceImpl stockService;
+
+    private UserStockServiceImpl userStockService;
 
     private Result result;
 
@@ -33,6 +47,12 @@ public class DetailStockActivity extends AppCompatActivity {
             peRatio, eps, regularPrice, priceVariation;
 
     private Button buyStock;
+
+    private UserServiceImp userService;
+
+    private User currentUser;
+
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +66,34 @@ public class DetailStockActivity extends AppCompatActivity {
             return insets;
         });
 
+        email = getIntent().getExtras().getString("userEmail");
+
         stockService = new StockServiceImpl();
+
+        userStockService = new UserStockServiceImpl();
+
+        userService = new UserServiceImp();
 
         binding();
 
+        searchUser();
+
         fetchStockInfo((String) getIntent().getExtras().getSerializable("code"));
+    }
+
+    private void searchUser() {
+
+        userService.findByEmail(email, new UserServiceImp.UserCallback() {
+            @Override
+            public void onSuccess(User user) {
+                currentUser = user;
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e("API USER", "Erro ao buscar o E-mail do usuário!");
+            }
+        });
     }
 
     private void fetchStockInfo(String code) {
@@ -80,6 +123,40 @@ public class DetailStockActivity extends AppCompatActivity {
                 Log.e("BRAPI", "Error fetching Stock  Info: " + error);
             }
         });
+
+        buyStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if(currentUser.getBudget() > result.getRegularMarketPrice()) {
+
+                    SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+                    String formattedDate = outputFormat.format(new Date());
+
+                    UserStock userStock = new UserStock(0, 1, result.getLongName(),
+                            result.getSymbol(), ETypeStock.STOCK, ETypeTransaction.BUY, formattedDate,
+                            result.getRegularMarketPrice(), currentUser.getId());
+
+                    userStockService.createUserStock(userStock, new UserStockServiceImpl.UserStockServiceCallback() {
+                        @Override
+                        public void onSuccess(UserStock result) {
+                            Toast.makeText(getApplicationContext(), "Compra realizada com sucesso!", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(getApplicationContext(), "Erro na compra!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "Saldo insuficiente para compra", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
+
     }
 
     private void binding() {

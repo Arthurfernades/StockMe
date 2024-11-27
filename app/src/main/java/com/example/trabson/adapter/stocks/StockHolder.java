@@ -27,16 +27,20 @@ public class StockHolder extends RecyclerView.ViewHolder {
 
     private ActivityResultLauncher<Intent> result;
 
-    public StockHolder(@NonNull View itemView, ActivityResultLauncher<Intent> result) {
+    private String userEmail;
+
+    public StockHolder(@NonNull View itemView, ActivityResultLauncher<Intent> result, String userEmail) {
         super(itemView);
         this.ctx = itemView.getContext();
         this.result = result;
+        this.userEmail = userEmail;
         bind();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent itn = new Intent(view.getContext(), DetailStockActivity.class);
                 itn.putExtra("code", stock.getStock());
+                itn.putExtra("userEmail", userEmail);
                 result.launch(itn);
             }
         });

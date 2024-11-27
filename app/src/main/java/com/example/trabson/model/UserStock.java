@@ -5,11 +5,9 @@ import com.example.trabson.model.Enum.ETypeTransaction;
 
 import java.util.Date;
 
-public class StockExchange {
+public class UserStock {
 
     private int id, quantity;
-
-    private Integer idWallet;
 
     private String name, code;
 
@@ -17,23 +15,25 @@ public class StockExchange {
 
     private ETypeTransaction transactionType;
 
-    private Date transactionDate;
+    private String transactionDate;
 
     private double transactionValue;
 
-    public StockExchange() {
+    private int userId;
+
+    public UserStock() {
     }
 
-    public StockExchange(int id, int quantity, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, Date transactionDate, double transactionValue, Integer idWallet) {
+    public UserStock(int id, int quantity, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, String transactionDate, double transactionValue, int userId) {
         this.id = id;
         this.quantity = quantity;
-        this.idWallet = idWallet;
         this.name = name;
         this.code = code;
         this.stockType = stockType;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
         this.transactionValue = transactionValue;
+        this.userId = userId;
     }
 
     public int getId() {
@@ -50,14 +50,6 @@ public class StockExchange {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public Integer getIdWallet() {
-        return idWallet;
-    }
-
-    public void setIdWallet(Integer idWallet) {
-        this.idWallet = idWallet;
     }
 
     public String getName() {
@@ -92,11 +84,11 @@ public class StockExchange {
         this.transactionType = transactionType;
     }
 
-    public Date getTransactionDate() {
+    public String getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(Date transactionDate) {
+    public void setTransactionDate(String transactionDate) {
         this.transactionDate = transactionDate;
     }
 
@@ -106,5 +98,13 @@ public class StockExchange {
 
     public void setTransactionValue(double transactionValue) {
         this.transactionValue = transactionValue;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

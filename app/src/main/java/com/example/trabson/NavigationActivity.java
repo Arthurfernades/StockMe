@@ -135,6 +135,12 @@ public class NavigationActivity extends AppCompatActivity {
 
                     StockFragment stock = new StockFragment();
 
+                    Bundle args = new Bundle();
+
+                    args.putString("userEmail", currentUser.getEmail());
+
+                    stock.setArguments(args);
+
                     changeFragment(stock);
 
                 } else if(item.getItemId() == R.id.nav_wallet) {
@@ -142,6 +148,14 @@ public class NavigationActivity extends AppCompatActivity {
                     getSupportActionBar().setTitle("Carteira");
 
                     WalletFragment wallet = new WalletFragment();
+
+                    Bundle args = new Bundle();
+
+                    args.putDouble("budget", currentUser.getBudget());
+
+                    args.putDouble("profit", currentUser.getProfit());
+
+                    wallet.setArguments(args);
 
                     changeFragment(wallet);
 

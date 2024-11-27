@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConfig {
 
-    private Retrofit stockRetrofit, newsRetrofit, userRetrofit;
+    private Retrofit stockRetrofit, newsRetrofit, userRetrofit, walletRetrofit, userStockRetrofit;
 
     public RetrofitConfig() {
 
@@ -26,6 +26,11 @@ public class RetrofitConfig {
                 .baseUrl("https://brapi.dev/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        userStockRetrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8080/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     public Retrofit getStockRetrofit() {
@@ -38,5 +43,9 @@ public class RetrofitConfig {
 
     public Retrofit getUserRetrofit() {
         return userRetrofit;
+    }
+
+    public Retrofit getUserStockRetrofit() {
+        return userStockRetrofit;
     }
 }

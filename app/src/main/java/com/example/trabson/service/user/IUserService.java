@@ -20,9 +20,6 @@ public interface IUserService {
     @POST("user")
     Call<User> saveUser(@Body UserDTO userDTO);
 
-    @GET("user")
-    public Call<List<LoginDTO>> getAllUsers();
-
     @GET("user/{id}")
     Call<User> getUser(@Path("id") int userId);
 

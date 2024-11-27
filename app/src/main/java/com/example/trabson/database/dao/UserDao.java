@@ -31,7 +31,6 @@ public class UserDao extends GenericsDao<User, Integer> {
             cv.put("password", obj.getPassword());
             cv.put("birthDate", sdf.format(obj.getBirthDate()));
             cv.put("gender", obj.getGender().toString());
-            cv.put("idWallet", obj.getIdWallet());
 
             con.insert("user", "id", cv);
 
@@ -96,8 +95,8 @@ public class UserDao extends GenericsDao<User, Integer> {
                     throw new RuntimeException(e);
                 }
 
-                user = new User(c.getInt(0), c.getString(1), c.getString(2),
-                c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
+//                user = new User(c.getInt(0), c.getString(1), c.getString(2),
+//                c.getString(3), date, EGender.valueOf(c.getString(5)), 0.0, 0.0);
             }
 
             return user;
@@ -131,10 +130,10 @@ public class UserDao extends GenericsDao<User, Integer> {
 
             c.moveToFirst();
             while(!c.isAfterLast()) {
-                User user = new User(c.getInt(0), c.getString(1), c.getString(2),
-                        c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
+//                User user = new User(c.getInt(0), c.getString(1), c.getString(2),
+//                        c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
 
-                users.add(user);
+//                users.add(user);
 
                 c.moveToNext();
             }
@@ -188,8 +187,8 @@ public class UserDao extends GenericsDao<User, Integer> {
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-                user = new User(c.getInt(0), c.getString(1), c.getString(2),
-                        c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
+//                user = new User(c.getInt(0), c.getString(1), c.getString(2),
+//                        c.getString(3), date, EGender.valueOf(c.getString(5)), c.getInt(6));
             }
 
             return user;
