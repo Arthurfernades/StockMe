@@ -10,7 +10,7 @@ import coil.request.ImageRequest;
 
 public class SvgLoader {
 
-    public static void loadSvg(Context context, String url, ImageView imageView) {
+    public void loadSvg(Context context, String url, ImageView imageView) {
         ImageLoader imageLoader = createImageLoader(context);
 
         ImageRequest request = new ImageRequest.Builder(context)
@@ -21,7 +21,7 @@ public class SvgLoader {
         imageLoader.enqueue(request);
     }
 
-    public static ImageLoader createImageLoader(Context context) {
+    public ImageLoader createImageLoader(Context context) {
         return new ImageLoader.Builder(context)
                 .components(new ComponentRegistry.Builder()
                         .add(new SvgDecoder.Factory())

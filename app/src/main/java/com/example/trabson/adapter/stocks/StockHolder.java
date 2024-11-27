@@ -1,16 +1,18 @@
 package com.example.trabson.adapter.stocks;
 
-import static com.example.trabson.helper.SvgLoader.loadSvg;
-
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.trabson.DetailStockActivity;
 import com.example.trabson.R;
+import com.example.trabson.helper.SvgLoader;
 import com.example.trabson.model.Stock;
 
 public class StockHolder extends RecyclerView.ViewHolder {
@@ -21,18 +23,32 @@ public class StockHolder extends RecyclerView.ViewHolder {
 
     private Context ctx;
 
-    public StockHolder(@NonNull View itemView, Context ctx) {
+    private Stock stock;
+
+    private ActivityResultLauncher<Intent> result;
+
+    public StockHolder(@NonNull View itemView, ActivityResultLauncher<Intent> result) {
         super(itemView);
-        this.ctx = ctx;
+        this.ctx = itemView.getContext();
+        this.result = result;
         bind();
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent itn = new Intent(view.getContext(), DetailStockActivity.class);
+                itn.putExtra("code", stock.getStock());
+                result.launch(itn);
+            }
+        });
     }
 
     public void fill(Stock stock) {
-
+        this.stock = stock;
         stockCode.setText(stock.getStock());
         nameNSector.setText(stock.getName() + " - " + stock.getSector());
         stockClose.setText("R$" + stock.getClose());
-        loadSvg(ctx, stock.getLogo(), stockSvg);
+        SvgLoader svgLoader = new SvgLoader();
+        svgLoader.loadSvg(ctx, stock.getLogo(), stockSvg);
     }
 
     public void bind() {

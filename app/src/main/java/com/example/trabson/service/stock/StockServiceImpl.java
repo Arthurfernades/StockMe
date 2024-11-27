@@ -3,7 +3,9 @@ package com.example.trabson.service.stock;
 import android.util.Log;
 
 import com.example.trabson.config.RetrofitConfig;
+import com.example.trabson.model.Result;
 import com.example.trabson.model.Stock;
+import com.example.trabson.model.dto.StockInfoResponseDTO;
 import com.example.trabson.model.dto.StockResponseDTO;
 
 import java.util.List;
@@ -57,8 +59,36 @@ public class StockServiceImpl {
         });
     }
 
+    public void getStockInfo(String code, final StockInfoCallback StockInfoCallback) {
+        Call<StockInfoResponseDTO> call = stockService.getStockInfo(code, API_KEY);
+
+        call.enqueue(new Callback<StockInfoResponseDTO>() {
+            @Override
+            public void onResponse(Call<StockInfoResponseDTO> call, Response<StockInfoResponseDTO> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    StockInfoResponseDTO stockInfoResponseDTO = response.body();
+                    StockInfoCallback.onSuccess(stockInfoResponseDTO.getResults());
+                } else {
+                    Log.e("BRAPI", "Falha na resposta: " + response.message());
+                    StockInfoCallback.onError("Falha na resposta: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StockInfoResponseDTO> call, Throwable throwable) {
+                Log.e("BRAPI", "Erro de requisição: " + throwable.getMessage(), throwable);
+                StockInfoCallback.onError("Erro na requisição: " + throwable.getMessage());
+            }
+        });
+    }
+
     public interface StockCallback {
         void onSuccess(List<Stock> stocks);
+        void onError(String error);
+    }
+
+    public interface StockInfoCallback {
+        void onSuccess(List<Result> results);
         void onError(String error);
     }
 }

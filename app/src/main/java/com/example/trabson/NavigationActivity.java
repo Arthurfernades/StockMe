@@ -33,7 +33,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.trabson.databinding.ActivityNavigationBinding;
 
-import java.util.Objects;
 
 public class NavigationActivity extends AppCompatActivity {
 

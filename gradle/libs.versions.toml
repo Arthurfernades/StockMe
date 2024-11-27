@@ -21,6 +21,8 @@ coil = "2.7.0"
 coilSvg = "2.7.0"
 glide = "5.0.0-rc01"
 androidsvg = "1.4"
+mpandroidchart = "3.1.0"
+androidplot = "1.5.8"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -44,6 +46,8 @@ coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coilSvg" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 androidsvg = { group = "com.caverock", name = "androidsvg", version.ref = "androidsvg" }
+mpandroidchart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mpandroidchart" }
+androidplot = { group = "com.androidplot", name = "androidplot", version.ref = "androidplot" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

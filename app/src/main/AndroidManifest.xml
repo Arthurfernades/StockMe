@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="tiramisu">
         <activity
+            android:name=".DetailStockActivity"
+            android:exported="false" />
+        <activity
             android:name=".NavigationActivity"
             android:exported="true"
             android:theme="@style/Theme.Trabson.NoActionBar">

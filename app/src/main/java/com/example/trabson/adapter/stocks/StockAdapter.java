@@ -1,10 +1,12 @@
 package com.example.trabson.adapter.stocks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,18 +20,18 @@ public class StockAdapter extends RecyclerView.Adapter<StockHolder> {
 
     private List<Stock> stockList;
 
-    private Context ctx;
+    private ActivityResultLauncher<Intent> result;
 
-    public StockAdapter(List<Stock> stockList, Context ctx) {
+    public StockAdapter(List<Stock> stockList, ActivityResultLauncher<Intent> result) {
         this.stockList = stockList;
-        this.ctx = ctx;
+        this.result = result;
     }
 
     @NonNull
     @Override
     public StockHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_line, parent, false);
-        return new StockHolder(view, ctx);
+        return new StockHolder(view, result);
     }
 
     @Override

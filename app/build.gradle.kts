@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.swiperefreshlayout)
     implementation(libs.coil)
     implementation(libs.coil.svg)
+    implementation(libs.androidplot)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -1,5 +1,6 @@
 package com.example.trabson.ui.stock;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -51,7 +56,7 @@ public class StockFragment extends Fragment {
                 recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        stockAdapter = new StockAdapter(new ArrayList<>(), getContext());
+        stockAdapter = new StockAdapter(new ArrayList<>(), viewStockInfo);
         recyclerView.setAdapter(stockAdapter);
 
         stockService = new StockServiceImpl();
@@ -62,6 +67,16 @@ public class StockFragment extends Fragment {
 
         return view;
     }
+
+    ActivityResultLauncher<Intent> viewStockInfo = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult o) {
+
+                }
+            }
+    );
 
     private void fetchStockList() {
         swipeRefreshLayout.setRefreshing(true);
