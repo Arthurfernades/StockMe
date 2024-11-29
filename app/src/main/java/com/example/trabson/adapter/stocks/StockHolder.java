@@ -29,18 +29,16 @@ public class StockHolder extends RecyclerView.ViewHolder {
 
     private String userEmail;
 
-    public StockHolder(@NonNull View itemView, ActivityResultLauncher<Intent> result, String userEmail) {
+    public StockHolder(@NonNull View itemView, ActivityResultLauncher<Intent> result) {
         super(itemView);
         this.ctx = itemView.getContext();
         this.result = result;
-        this.userEmail = userEmail;
         bind();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent itn = new Intent(view.getContext(), DetailStockActivity.class);
                 itn.putExtra("code", stock.getStock());
-                itn.putExtra("userEmail", userEmail);
                 result.launch(itn);
             }
         });
@@ -56,9 +54,9 @@ public class StockHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind() {
-        stockCode = itemView.findViewById(R.id.tvStockCode);
+        stockCode = itemView.findViewById(R.id.tvUserStockCode);
         nameNSector = itemView.findViewById(R.id.tvNameNSector);
-        stockClose = itemView.findViewById(R.id.tvStockClose);
+        stockClose = itemView.findViewById(R.id.tvUserStockClose);
         stockSvg = itemView.findViewById(R.id.ivStockSvg);
     }
 }

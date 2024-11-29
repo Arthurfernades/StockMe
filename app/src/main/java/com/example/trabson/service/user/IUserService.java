@@ -5,8 +5,6 @@ import com.example.trabson.model.dto.ResponseDTO;
 import com.example.trabson.model.dto.UserDTO;
 import com.example.trabson.model.dto.LoginDTO;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -24,7 +22,7 @@ public interface IUserService {
     Call<User> getUser(@Path("id") int userId);
 
     @PUT("user/{id}")
-    Call<User> updateUser(@Path("id") int id, @Body User user);
+    Call<User> updateUser(@Path("id") int id, @Body UserDTO user);
 
     @DELETE("user/{id}")
     Call<String> deleteUser(@Path("id") int userId);

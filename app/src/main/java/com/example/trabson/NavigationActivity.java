@@ -3,6 +3,7 @@ package com.example.trabson;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -107,7 +108,11 @@ public class NavigationActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Erro de resposta da API: " + error, Toast.LENGTH_LONG).show();
+                Log.e("API USER", error);
+                SharedPreferences.Editor edt = prefs.edit();
+                edt.remove("email");
+                edt.apply();
+                callLoginPage();
             }
         });
     }
@@ -135,12 +140,6 @@ public class NavigationActivity extends AppCompatActivity {
 
                     StockFragment stock = new StockFragment();
 
-                    Bundle args = new Bundle();
-
-                    args.putString("userEmail", currentUser.getEmail());
-
-                    stock.setArguments(args);
-
                     changeFragment(stock);
 
                 } else if(item.getItemId() == R.id.nav_wallet) {
@@ -151,9 +150,7 @@ public class NavigationActivity extends AppCompatActivity {
 
                     Bundle args = new Bundle();
 
-                    args.putDouble("budget", currentUser.getBudget());
-
-                    args.putDouble("profit", currentUser.getProfit());
+                    args.putString("email", currentUser.getEmail());
 
                     wallet.setArguments(args);
 

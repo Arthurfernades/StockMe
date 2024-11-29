@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -125,37 +126,92 @@
             android:text="Lucro por Ação: R$ 6.55"
             android:textSize="14sp" />
 
-        <com.androidplot.xy.XYPlot
-            android:id="@+id/priceChart"
-            android:layout_width="match_parent"
-            android:layout_height="397dp"
-            android:background="@color/white" />
-
-
-        <Button
-            android:id="@+id/btnBuyStock"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@color/blue"
-            android:text="@string/comprar"
-            android:textColor="@android:color/white" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvRegularPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="R$ 39.13"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvPriceVariation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Variação: -0.05 (-0.128%)"
-            android:textAlignment="center"
-            android:textColor="@color/red"
-            android:textSize="14sp" />
+                <ImageButton
+                    android:id="@+id/ibMinus"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/minus_icon"
+                    app:tint="#1381FF" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/cpTotalQuantity"
+                    android:layout_width="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:enabled="false"
+                        android:inputType="number"
+                        android:textAlignment="center" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/ibPlus"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    app:srcCompat="@drawable/plus_icon"
+                    app:tint="#1381FF" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnBuyStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/blue"
+                android:text="@string/comprar"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/tvRegularPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R$ 39.13"
+                android:textAlignment="center"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tvPriceVariation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Variação: -0.05 (-0.128%)"
+                android:textAlignment="center"
+                android:textColor="@color/red"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btnSaleStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/vender" />
+
+            <TextView
+                android:id="@+id/tvStockInWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </ScrollView>

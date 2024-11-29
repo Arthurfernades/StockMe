@@ -104,6 +104,26 @@ public class UserServiceImp {
         });
     }
 
+    public void updateUser(int id, UserDTO user, final UserCallback userCallback) {
+        Call<User> callUSer = userService.updateUser(id, user);
+
+        callUSer.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    userCallback.onSuccess(response.body());
+                } else {
+                    userCallback.onError("Erro: " + response.code() + " - " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                userCallback.onError("Failure: " + throwable.getMessage());
+            }
+        });
+    }
+
     public interface AuthServiceCallback {
         void onSuccess(String result);
         void onError(String error);

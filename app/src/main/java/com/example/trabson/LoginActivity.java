@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent itn = new Intent(getApplicationContext(), RegisterActivity.class);
-
                 viewUserRegister.launch(itn);
             }
         };

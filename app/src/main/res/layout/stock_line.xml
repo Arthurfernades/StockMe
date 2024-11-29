@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/tvStockCode"
+        android:id="@+id/tvUserStockCode"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:text="Code"
         android:textSize="34sp"
-        app:layout_constraintEnd_toStartOf="@+id/tvStockClose"
+        app:layout_constraintEnd_toStartOf="@+id/tvUserStockClose"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,10 +37,10 @@
         android:layout_marginTop="8dp"
         android:text="Name - Sector"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvStockCode" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserStockCode" />
 
     <TextView
-        android:id="@+id/tvStockClose"
+        android:id="@+id/tvUserStockClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

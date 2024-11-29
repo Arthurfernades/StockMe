@@ -20,11 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.trabson.R;
-import com.example.trabson.adapter.news.NewsAdapter;
 import com.example.trabson.adapter.stocks.StockAdapter;
-import com.example.trabson.model.Article;
 import com.example.trabson.model.Stock;
-import com.example.trabson.service.news.NewsServiceImp;
 import com.example.trabson.service.stock.StockServiceImpl;
 
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class StockFragment extends Fragment {
                 recyclerView.getContext(), layoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        stockAdapter = new StockAdapter(new ArrayList<>(), viewStockInfo, getArguments().getString("userEmail"));
+        stockAdapter = new StockAdapter(new ArrayList<>(), viewStockInfo);
         recyclerView.setAdapter(stockAdapter);
 
         stockService = new StockServiceImpl();

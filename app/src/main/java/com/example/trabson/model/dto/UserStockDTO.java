@@ -1,28 +1,19 @@
-package com.example.trabson.model;
+package com.example.trabson.model.dto;
 
-import com.example.trabson.model.Enum.ETypeStock;
-import com.example.trabson.model.Enum.ETypeTransaction;
-
-public class UserStock {
+public class UserStockDTO {
 
     private int id, quantity;
 
-    private String name, code;
-
-    private ETypeStock stockType;
-
-    private ETypeTransaction transactionType;
-
-    private String lastTransactionDate;
+    private String name, code, stockType, transactionType, lastTransactionDate;
 
     private double amountValue;
 
     private int userId;
 
-    public UserStock() {
+    public UserStockDTO() {
     }
 
-    public UserStock(int id, int quantity, String name, String code, ETypeStock stockType, ETypeTransaction transactionType, String lastTransactionDate, double amountValue, int userId) {
+    public UserStockDTO(int id, int quantity, String name, String code, String stockType, String transactionType, String lastTransactionDate, double amountValue, int userId) {
         this.id = id;
         this.quantity = quantity;
         this.name = name;
@@ -66,19 +57,19 @@ public class UserStock {
         this.code = code;
     }
 
-    public ETypeStock getStockType() {
+    public String getStockType() {
         return stockType;
     }
 
-    public void setStockType(ETypeStock stockType) {
+    public void setStockType(String stockType) {
         this.stockType = stockType;
     }
 
-    public ETypeTransaction getTransactionType() {
+    public String getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(ETypeTransaction transactionType) {
+    public void setTransactionType(String transactionType) {
         this.transactionType = transactionType;
     }
 
@@ -86,7 +77,7 @@ public class UserStock {
         return lastTransactionDate;
     }
 
-    public void setLastTransactionDate(String lastTransactionDate) {
+    public void setTLastTransactionDate(String lastTransactionDate) {
         this.lastTransactionDate = lastTransactionDate;
     }
 

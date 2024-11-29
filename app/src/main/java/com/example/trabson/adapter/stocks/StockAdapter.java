@@ -22,19 +22,16 @@ public class StockAdapter extends RecyclerView.Adapter<StockHolder> {
 
     private ActivityResultLauncher<Intent> result;
 
-    private String userEmail;
-
-    public StockAdapter(List<Stock> stockList, ActivityResultLauncher<Intent> result, String userEmail) {
+    public StockAdapter(List<Stock> stockList, ActivityResultLauncher<Intent> result) {
         this.stockList = stockList;
         this.result = result;
-        this.userEmail = userEmail;
     }
 
     @NonNull
     @Override
     public StockHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stock_line, parent, false);
-        return new StockHolder(view, result, userEmail);
+        return new StockHolder(view, result);
     }
 
     @Override

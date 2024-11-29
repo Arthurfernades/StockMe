@@ -20,9 +20,6 @@
                 android:id="@+id/nav_fund"
                 android:icon="@drawable/fund_icon"
                 android:title="@string/fundos_imobiliarios" />
-            <item
-                android:id="@+id/nav_bdr"
-                android:title="@string/bdr" />
         </menu>
     </item>
 </menu>
