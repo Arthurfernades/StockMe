@@ -33,4 +33,4 @@ Before running the project, ensure you have the following:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/MyFinanceApp.git
+   git clone https://github.com/yourusername/MyFinanceApp.git](https://github.com/Arthurfernades/StockMe
